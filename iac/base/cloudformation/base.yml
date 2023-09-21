@@ -8,7 +8,7 @@ Parameters:
     Default: "ParDokuSudokuSolver-"
     Type: String
   OIDCProviderArn:
-    Description: Arn for the GitHub OIDC Provider.
+    Description: Arn for the GitHub OIDC Provider..
     Default: ""
     Type: String
   OIDCAudience:
