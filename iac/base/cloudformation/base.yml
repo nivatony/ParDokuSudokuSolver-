@@ -15,7 +15,7 @@ Parameters:
     Description: Audience supplied to configure-aws-credentials.
     Default: "sts.amazonaws.com"
     Type: String
-    
+     
 Conditions:
   CreateOIDCProvider: !Equals [!Ref OIDCProviderArn, ""]
 Resources:
