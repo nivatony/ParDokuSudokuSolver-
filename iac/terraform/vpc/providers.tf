@@ -11,10 +11,6 @@ provider "aws" {
   region = "global" # You can specify the AWS region here if it's different from the default region configured in your AWS CLI or environment.
 }
 
-   provider "aws" {
-    region = "${var.aws_region}"
-}
-
 
     backend "s3" {
     bucket         = "terraform-backend-salpad-1"
