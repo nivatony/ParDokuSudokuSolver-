@@ -5,14 +5,8 @@ terraform {
       version = "~> 5"
     }
   }
-}
 
-provider "aws" {
-  region = "global" # You can specify the AWS region here if it's different from the default region configured in your AWS CLI or environment.
-}
-
-
-    backend "s3" {
+  backend "s3" {
     bucket         = "terraform-backend-salpad-1"
     key            = "terraform.tfstate/dev/vpc"
     region         = "us-east-2"
@@ -20,3 +14,6 @@ provider "aws" {
   }
 }
 
+provider "aws" {
+  region = "global" # You can specify the AWS region here if it's different from the default region configured in your AWS CLI or environment.
+}
