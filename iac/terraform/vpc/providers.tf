@@ -6,7 +6,6 @@ terraform {
     }
   }
 
-
 provider "aws" {
   region = "global" # You can specify the AWS region here if it's different from the default region configured in your AWS CLI or environment.
 }
