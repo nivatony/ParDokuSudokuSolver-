@@ -15,11 +15,11 @@ public_subnet_2_details = {
 }
 
 private_subnet_1_details = {
-  availability_zone = "eu-south-1a"
+  availability_zone = "eu-north-1c"
   cidr_block        = "10.0.3.0/24"
 }
 
 private_subnet_2_details = {
-  availability_zone = "eu-south-1b"
+  availability_zone = "eu-north-1d"
   cidr_block        = "10.0.4.0/24"
 }
