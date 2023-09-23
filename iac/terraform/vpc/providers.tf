@@ -7,7 +7,7 @@ terraform {
   }
 }
    backend "s3" {
-     bucket = "terraform-backend-salpad-1"
+     bucket = "terraform-backend-salpad"
      key    = "terraform.tfstate/dev/vpc"
-     region = "us-east-1"
+     region = "global"
 }
