@@ -53,7 +53,7 @@ Resources:
   S3Bucket:
     Type: "AWS::S3::Bucket"
     Properties:
-      BucketName: terraform-backend-salpad-1
+      BucketName: terraform-backend-salpad
 
 Outputs:
   Role:
