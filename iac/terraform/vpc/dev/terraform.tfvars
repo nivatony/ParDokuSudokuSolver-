@@ -20,6 +20,6 @@ private_subnet_1_details = {
 }
 
 private_subnet_2_details = {
-  availability_zone = "eu-north-1d"
+  availability_zone = "us-east-1"
   cidr_block        = "10.0.4.0/24"
 }
