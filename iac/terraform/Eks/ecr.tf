@@ -1,5 +1,5 @@
 provider "aws" {
-  region = "eu-north-1"  # Replace with your desired region..
+  region = "eu-north-1"  # Replace with your desired region.
 }
 
 resource "aws_ecr_repository" "sudoku_solver" {
