@@ -38,6 +38,10 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_REGION: us-north-1
 
+
+      - name: Clean up Docker build context
+        run: rm -rf /var/lib/docker/tmp/buildkit-mount*
+        
       - name: Build and push Docker image
         run: |
           docker build -t sudoku-solver-app:v1 .
