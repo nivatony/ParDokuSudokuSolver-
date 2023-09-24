@@ -4,7 +4,7 @@ resource "aws_route53_zone" "sudoku_solver_zone" {
 
 resource "aws_route53_record" "sudoku_solver_record" {
   zone_id = aws_route53_zone.sudoku_solver_zone.zone_id
-  name    = "sudoku"  # Subdomain or record name (e.g., sudoku.example.com)
+  name    = "sudoku.com"  # Subdomain or record name (e.g., sudoku.example.com)
   type    = "A"
   ttl     = "300"
   
