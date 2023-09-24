@@ -12,5 +12,5 @@ output "eks_cluster_ca_data" {
   value = module.eks_cluster.cluster_certificate_authority_data
 }
 
-# Define other resources and configurations as needed
+# Define other resources and configurations as needed...
 
