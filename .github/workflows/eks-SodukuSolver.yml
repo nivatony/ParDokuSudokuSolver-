@@ -5,8 +5,20 @@ on:
     branches:
       - main  # Adjust to the branch you want to trigger the deployment from
 
+paths:
+      - "iac/terraform/vpc/*"
+      - "iac/terraform/vpc/dev/**"
+env:
+  # TF_LOG: INFO
+  AWS_ACCOUNT_NUMBER: 712699700534
+defaults:
+  run:
+    shell: bash
+    working-directory: ./iac/terraform/vpc
+permissions:
+  contents: read
 jobs:
-  deploy:
+  deploy-dev:
     runs-on: ubuntu-latest
     
  permissions:
