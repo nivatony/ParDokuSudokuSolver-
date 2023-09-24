@@ -39,6 +39,10 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_REGION: us-north-1
 
+      # Add the following step to update Terraform modules
+      - name: Update Terraform modules
+        run: terraform get --update=true
+
       - name: Clean up Docker build context
         run: rm -rf /var/lib/docker/tmp/buildkit-mount*
         
