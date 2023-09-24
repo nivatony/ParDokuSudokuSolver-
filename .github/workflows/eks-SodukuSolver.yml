@@ -20,7 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     # These permissions are needed to interact with GitHub's OIDC Token endpoint. New
     permissions:
-      id-token: write
+      #id-token: write
       contents: read
     steps:
       - name: "Checkout"
