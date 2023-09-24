@@ -5,7 +5,7 @@ FROM python:3.9
 WORKDIR /app
 
 # Copy your application code into the container
-COPY Sudokusolver.py /app
+COPY SSudokusolver.py /app
 
 # Install any dependencies
 RUN pip install
