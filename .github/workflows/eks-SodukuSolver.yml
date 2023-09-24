@@ -1,11 +1,9 @@
 name: Deploy to EKS
-
 on:
   push:
     branches:
-      - main  # Adjust to the branch you want to trigger the deployment from
-
-paths:
+      - main
+    paths:
       - "iac/terraform/vpc/*"
       - "iac/terraform/vpc/dev/**"
 env:
@@ -20,8 +18,8 @@ permissions:
 jobs:
   deploy-dev:
     runs-on: ubuntu-latest
-    
- permissions:
+    # These permissions are needed to interact with GitHub's OIDC Token endpoint. New
+    permissions:
       id-token: write
       contents: read
     steps:
