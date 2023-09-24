@@ -43,6 +43,10 @@ jobs:
       - name: Update Terraform modules
         run: terraform get --update=true
 
+      # Add the step to remove Terraform's plugin cache
+      - name: Clean up Terraform plugin cache
+        run: rm -rf ~/.terraform.d/plugins
+
       - name: Clean up Docker build context
         run: rm -rf /var/lib/docker/tmp/buildkit-mount*
         
