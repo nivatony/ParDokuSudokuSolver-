@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - main
+
     paths:
       - "iac/terraform/vpc/*"
       - "iac/terraform/vpc/dev/**"
