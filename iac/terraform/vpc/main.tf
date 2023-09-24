@@ -1,5 +1,5 @@
 provider "aws" {
- 
+ }
 resource "aws_vpc" "main" {
   cidr_block           = var.vpc_cidr_block
   enable_dns_hostnames = true
@@ -102,4 +102,4 @@ module "eks_node_group" {
 
   node_security_group_ids = [aws_security_group.node_security_group.id]
 }
-
+}
