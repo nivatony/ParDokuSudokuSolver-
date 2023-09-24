@@ -1,0 +1,21 @@
+# sudoku-solver-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sudoku-solver-deployment
+spec:
+  replicas: 3  # Adjust as needed
+  selector:
+    matchLabels:
+      app: sudoku-solver
+  template:
+    metadata:
+      labels:
+        app: sudoku-solver
+    spec:
+      containers:
+        - name: sudoku-solver-container
+          image: <your-account-id>.dkr.ecr.<your-region>.amazonaws.com/sudoku-solver-app:v1
+          ports:
+            - containerPort: 80
+
