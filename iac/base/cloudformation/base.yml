@@ -1,21 +1,21 @@
 Parameters:
   GitHubOrg:
     Description: Name of GitHub organization/user (case sensitive)
-    Default: "Nivatony"
+    Default: "nivatony"
     Type: String
   RepositoryName:
     Description: Name of GitHub repository (case sensitive)
     Default: "ParDokuSudokuSolver-"
     Type: String
   OIDCProviderArn:
-    Description: Arn for the GitHub OIDC Provider.
+    Description: Arn for the GitHub OIDC Provider..
     Default: ""
     Type: String
   OIDCAudience:
     Description: Audience supplied to configure-aws-credentials.
     Default: "sts.amazonaws.com"
     Type: String
-
+     
 Conditions:
   CreateOIDCProvider: !Equals [!Ref OIDCProviderArn, ""]
 Resources:
@@ -53,7 +53,7 @@ Resources:
   S3Bucket:
     Type: "AWS::S3::Bucket"
     Properties:
-      BucketName: terraform-backend-salpad-1
+      BucketName: terraform-backend-salpad
 
 Outputs:
   Role:
