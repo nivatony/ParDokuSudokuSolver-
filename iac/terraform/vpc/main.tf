@@ -77,7 +77,7 @@ resource "aws_ssm_parameter" "eks_cluster_vpc_info" {
 }
 
 resource "aws_ecr_repository" "sudoku_solver" {
-  name = "sudoku-solver-app"
+  name = "sudoku_solver_app"
 }
 
 module "eks_cluster" {
