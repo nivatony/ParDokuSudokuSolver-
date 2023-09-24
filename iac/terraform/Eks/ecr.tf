@@ -3,7 +3,7 @@ provider "aws" {
 }
 
 resource "aws_ecr_repository" "sudoku_solver" {
-  name = "sudoku-solver-app"
+  name = "sudoku_solver_app"
 }
 
 output "ecr_repository_url" {
