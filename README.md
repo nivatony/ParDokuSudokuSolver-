@@ -18,7 +18,7 @@ This project is focused on designing a robust and scalable cloud architecture fo
 
 Here's a screenshot of our application in action:
 
-![ParDoku Sudoku Solver](~/Desktop/Screenshot%202023-09-19.png)
+![ParDoku Sudoku Solver](./Screenshot%202023-09-19.png)
 
 ## Getting Started
 
