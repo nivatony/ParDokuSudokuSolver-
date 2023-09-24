@@ -102,4 +102,4 @@ module "eks_node_group" {
 
   node_security_group_ids = [aws_security_group.node_security_group.id]
 }
-}
+
