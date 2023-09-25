@@ -1,8 +1,7 @@
 name: vpc-ci-dev-create
 on:
   push:
-    branches:
-      - main
+    branches: workflow_dispatch
     paths:
       - "iac/terraform/vpc/*"
       - "iac/terraform/vpc/dev/**"
