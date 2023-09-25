@@ -1,23 +1,28 @@
-name: Deploy to Dev Environment
+name: Deploy EKS Cluster
 
 on:
   push:
     branches:
-      - main
+      - main  # Adjust to the branch you want to trigger the deployment from
     paths:
       - "iac/terraform/vpc/*"
       - "iac/terraform/vpc/dev/**"
-      - "iac/terraform/Eks/*"  # Add this line to include the Eks directory
+      - "iac/terraform/Eks/*"
 
+env:
+  # TF_LOG: INFO
+  AWS_ACCOUNT_NUMBER: 712699700534
+
+defaults:
+  run:
+    shell: bash
+    working-directory: ./iac/terraform/vpc
 permissions:
   contents: read
 
 jobs:
-  deploy-dev:
+  deploy:
     runs-on: ubuntu-latest
-    permissions:
-      id-token: write
-      contents: read
 
     steps:
       - name: Checkout code
@@ -34,37 +39,46 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_REGION: us-north-1
 
-      - name: Setup Terraform with specified version on the runner
-        uses: hashicorp/setup-terraform@v2
-        # with:
-        #   terraform_version: 1.4.6
+      - name: Set up Terraform (vpc)
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: 1.0.0  # Adjust to your desired Terraform version
+        working-directory: ./iac/terraform/vpc
 
-      - name: Run Terraform commands
-        run:
-          shell: bash
-          working-directory: ./iac/terraform/vpc  # Update this path if needed
-          command: |
-            # Add your Terraform commands here, such as:
-            # terraform init
-            # terraform apply -auto-approve
+      - name: Initialize Terraform (vpc)
+        run: terraform init
+        working-directory: ./iac/terraform/vpc
 
-      - name: Build and push Docker image
-        run: |
-          docker build -t sudoku-solver-app:v1 .
-          docker tag sudoku-solver-app:v1 712699700534.dkr.ecr.eu-north-1.amazonaws.com/sudoku-solver-app:v1
-          docker push 712699700534.dkr.ecr.eu-north-1.amazonaws.com/sudoku-solver-app:v1
+      - name: Apply Terraform changes (vpc)
+        run: terraform apply -auto-approve
+        working-directory: ./iac/terraform/vpc
 
-      - name: Deploy to EKS
-        run: |
-          kubectl apply -f sudoku-solver-deployment.yaml
-          kubectl apply -f sudoku-solver-service.yaml
+      - name: Save kubeconfig (vpc)
+        run: terraform output kubeconfig > kubeconfig_vpc.yml
+        working-directory: ./iac/terraform/vpc
 
-      - name: Wait for rollout to complete
-        run: |
-          kubectl rollout status deployment/sudoku-solver-deployment
+      - name: Build Docker image
+        run: docker build -t sudoku-solver-app .
 
-      - name: Update Kubernetes Ingress
-        run: |
-          kubectl apply -f sudoku-solver-ingress.yaml
+      - name: Retrieve ECR login credentials
+        run: aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 712699700534.dkr.ecr.us-east-1.amazonaws.com
 
-# Add more jobs or steps as needed...
+      - name: Tag Docker image
+        run: docker tag sudoku-solver-app:latest 712699700534.dkr.ecr.us-east-1.amazonaws.com/sudoku-solver-app:latest
+
+      - name: Push Docker image to ECR
+        run: docker push 712699700534.dkr.ecr.us-east-1.amazonaws.com/sudoku-solver-app:latest
+
+      - name: Deploy to EKS (vpc)
+        run: kubectl apply -f sudoku-solver-deployment.yaml
+        working-directory: ./iac/terraform/vpc
+
+      - name: Wait for rollout to complete (vpc)
+        run: kubectl rollout status deployment/sudoku-solver-deployment
+        working-directory: ./iac/terraform/vpc
+
+      - name: Update Kubernetes Ingress (root)
+        run: kubectl apply -f sudoku-solver-ingress.yaml
+
+      - name: Update Kubernetes Service (root)
+        run: kubectl apply -f sudoku-solver-service.yaml
