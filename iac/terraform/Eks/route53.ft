@@ -7,10 +7,13 @@ resource "aws_route53_record" "sudoku_solver_record" {
   name    = "sudoku.com"  # Subdomain or record name (e.g., sudoku.example.com)
   type    = "A"
   ttl     = "300"
+   # Placeholder values until you have your EKS cluster set up
+  records = ["0.0.0.0"]  # Placeholder IP address or load balancer DNS name
   
-  alias {
-    name                   = "your-eks-load-balancer-or-IP"  # Replace with your EKS service's load balancer DNS name or IP address
-    zone_id                = "your-eks-zone-id"  # Replace with the Route 53 zone ID of your EKS service
-    evaluate_target_health = true
-  }
+  
+#  alias {
+   # name                   = "your-eks-load-balancer-or-IP"  # Replace with your EKS service's load balancer DNS name or IP address
+    #zone_id                = "your-eks-zone-id"  # Replace with the Route 53 zone ID of your EKS service
+  #  evaluate_target_health = true
+ # }
 }
