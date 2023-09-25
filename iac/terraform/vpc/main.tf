@@ -1,5 +1,7 @@
 provider "aws" {
- }
+  region = "eu-north-1"  # Change to your desired AWS region
+}
+
 resource "aws_vpc" "main" {
   cidr_block           = var.vpc_cidr_block
   enable_dns_hostnames = true
@@ -63,43 +65,99 @@ resource "aws_subnet" "private_subnet_2" {
   }
 }
 
-resource "aws_ssm_parameter" "eks_cluster_vpc_info" {
-  depends_on = [aws_vpc.main, aws_subnet.public_subnet_1, aws_subnet.public_subnet_2, aws_subnet.private_subnet_1, aws_subnet.private_subnet_2]
-  name       = "/eks/${var.cluster_name}/${var.environment}/vpc"
-  type       = "String"
-  value = jsonencode({
-    "vpc_id"              = aws_vpc.main.id
-    "public_subnet_1_id"  = aws_subnet.public_subnet_1.id
-    "public_subnet_2_id"  = aws_subnet.public_subnet_2.id
-    "private_subnet_1_id" = aws_subnet.private_subnet_1.id
-    "private_subnet_2_id" = aws_subnet.private_subnet_2.id
+resource "aws_iam_role" "eks_node_group" {
+  name = "eks-node-group-${var.cluster_name}"
+
+  assume_role_policy = jsonencode({
+    Statement = [{
+      Action = "sts:AssumeRole"
+      Effect = "Allow"
+      Principal = {
+        Service = "ec2.amazonaws.com"
+      }
+    }]
+    Version = "2012-10-17"
   })
 }
 
-resource "aws_ecr_repository" "sudoku_solver" {
-  name = "sudoku_solver_app"
+resource "aws_iam_role_policy_attachment" "eksworkernode_policy" {
+  policy_arn = "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy"
+  role       = aws_iam_role.eks_node_group.name
 }
 
-module "eks_cluster" {
-  source          = "terraform-aws-modules/eks/aws"
+resource "aws_iam_role_policy_attachment" "eks_cni_policy" {
+  policy_arn = "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"
+  role       = aws_iam_role.eks_node_group.name
+}
+
+resource "aws_iam_role_policy_attachment" "ec2container_policy" {
+  policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
+  role       = aws_iam_role.eks_node_group.name
+}
+
+resource "aws_iam_role_policy_attachment" "eks_admin_policy" {
+  policy_arn = "arn:aws:iam::aws:policy/AmazonEKSAdminPolicy"
+  role       = aws_iam_role.eks_node_group.name
+}
+
+data "aws_availability_zones" "available" {
+  state = "available"
+}
+
+module "eks" {
+  source  = "terraform-aws-modules/eks/aws"
+  version = "18.29.0"
+
   cluster_name    = var.cluster_name
-  cluster_version = "1.21"  # Replace with your desired Kubernetes version
-  subnets         = [aws_subnet.public_subnet_1.id, aws_subnet.public_subnet_2.id]
-  vpc_id          = aws_vpc.main.id
+  cluster_version = "1.27"  # Replace with your desired Kubernetes version
+
+  cluster_endpoint_private_access = true
+  cluster_endpoint_public_access  = true
+
+  vpc_id     = aws_vpc.main.id
+  subnet_ids = concat(aws_subnet.public_subnet_1[*].id, aws_subnet.public_subnet_2[*].id)  # Use public subnets
+
+  enable_irsa = true
+
+  eks_managed_node_group_defaults = {
+    disk_size = 50
+  }
+
+  eks_managed_node_groups = {
+    general = {
+      desired_size = 1
+      min_size     = 1
+      max_size     = 10
+
+      labels = {
+        role = "general"
+      }
+
+      instance_types = ["t3.small"]
+      capacity_type  = "ON_DEMAND"
+    }
+
+    spot = {
+      desired_size = 1
+      min_size     = 1
+      max_size     = 10
+
+      labels = {
+        role = "spot"
+      }
+
+      taints = [{
+        key    = "market"
+        value  = "spot"
+        effect = "NO_SCHEDULE"
+      }]
+
+      instance_types = ["t3.micro"]
+      capacity_type  = "SPOT"
+    }
+  }
+
+  tags = {
+    Environment = "dev"
+  }
 }
-
-module "eks_node_group" {
-  source           = "terraform-aws-modules/eks/aws//modules/node_group"
-  cluster_name     = module.eks_cluster.cluster_id
-  cluster_endpoint = module.eks_cluster.cluster_endpoint
-  node_group_name  = "eks-node-group"
-  node_instance_type = "t2.micro"
-  node_subnet_ids  = [aws_subnet.private_subnet_1.id, aws_subnet.private_subnet_2.id]
-  node_group_desired_capacity = 2
-  node_group_min_size = 1
-  node_group_max_size = 3
- # key_name         = "ssh-key-pair"  aws ec2 create-key-pair --key-name my-key-pair --query 'KeyMaterial' --output text > my-key-pair.pem
-
-  node_security_group_ids = [aws_security_group.node_security_group.id]
-}
-
