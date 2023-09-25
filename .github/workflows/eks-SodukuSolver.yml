@@ -57,6 +57,19 @@ jobs:
         run: terraform output kubeconfig > kubeconfig_vpc.yml
         working-directory: ./iac/terraform/vpc
 
+      # Add the Terraform plan, Terraform Plan Status, and Terraform Apply steps here
+      - name: Terraform plan
+        id: plan
+        run: terraform plan -var-file=./dev/terraform.tfvars -no-color -input=false
+        continue-on-error: true
+
+      - name: Terraform Plan Status
+        if: steps.plan.outcome == 'failure'
+        run: exit 1
+
+      - name: Terraform Apply
+        run: terraform apply -var-file=./dev/terraform.tfvars -auto-approve -input=false
+
       - name: Build Docker image
         run: docker build -t sudoku-solver-app .
 
