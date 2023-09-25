@@ -43,7 +43,7 @@ jobs:
         uses: hashicorp/setup-terraform@v1
         with:
           terraform_version: 1.0.0  # Adjust to your desired Terraform version
-        working-directory: ./iac/terraform/vpc
+      
 
       - name: Initialize Terraform (vpc)
         run: terraform init
