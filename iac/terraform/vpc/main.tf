@@ -178,6 +178,8 @@ resource "aws_eks_node_group" "my_node_group" {
 
   # nivel i can add other node group configurations...
 }
+}
+
 
 # Generate kubeconfig for your EKS cluster
 data "aws_eks_cluster_auth" "my_cluster" {
