@@ -11,11 +11,11 @@ output "ecr_repository_url" {
 }
 
 output "eks_cluster_endpoint" {
-  value = module.eks_cluster.cluster_endpoint
+  value = var.cluster_name.cluster_endpoint
 }
 
 output "eks_cluster_ca_data" {
-  value = module.eks_cluster.cluster_certificate_authority_data
+  value = var.cluster_name.cluster_certificate_authority_data
 }
 
 
