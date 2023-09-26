@@ -61,7 +61,7 @@ resource "aws_iam_role_policy_attachment" "eks_admin_policy" {
 resource "aws_instance" "my_eks_instance" {
   ami           = "ami-0703b5d7f7da98d1e"  # Specify your desired AMI
   instance_type = "t2.micro"     # Specify your desired instance type
-  subnet_id     = aws_subnet.public_subnet_1.id  # Choose the appropriate subnet
+  subnet_id     = subnet.public_subnet_1.id  # Choose the appropriate subnet
 
   # Add other EC2 configuration as needed...
 
@@ -82,10 +82,10 @@ resource "aws_eks_cluster" "my_cluster" {
   role_arn = aws_iam_role.eks_node_group.arn
   vpc_config {
     subnet_ids = [
-      aws_subnet.public_subnet_1.id,
-      aws_subnet.public_subnet_2.id,
-      aws_subnet.private_subnet_1.id,
-      aws_subnet.private_subnet_2.id,
+      subnet.public_subnet_1.id,
+      subnet.public_subnet_2.id,
+      subnet.private_subnet_1.id,
+      subnet.private_subnet_2.id,
 
     ]
   }
@@ -107,7 +107,7 @@ resource "aws_eks_node_group" "my_node_group" {
 
 # Generate kubeconfig for your EKS cluster
 data "aws_eks_cluster_auth" "my_cluster" {
-  name = aws_eks_cluster.var.cluster_name
+  name = var.cluster_name
 }
 
 output "kubeconfig" {
