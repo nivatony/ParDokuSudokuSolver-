@@ -10,6 +10,21 @@ output "kubeconfig" {
   value = data.aws_eks_cluster_auth.my_cluster.kubeconfig
 }
 
+data "template_file" "kubeconfig" {
+  template = file("${path.module}/kubeconfig.tpl")
+
+  vars = {
+    eks_cluster_endpoint       = module.eks_cluster.cluster_endpoint
+    eks_cluster_ca_data        = module.eks_cluster.cluster_certificate_authority_data
+    cluster_name               = var.cluster_name
+  }
+}
+
+output "kubeconfig" {
+  value = data.template_file.kubeconfig.rendered
+}
+
+
 output "ecr_repository_url" {
   value = aws_ecr_repository.sudoku_solver_app1.repository_url
 }
