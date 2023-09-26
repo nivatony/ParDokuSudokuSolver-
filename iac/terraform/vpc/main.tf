@@ -1,6 +1,10 @@
 provider "aws" {
   region = "eu-north-1"  # Change to your desired AWS region....
+
+  max_retries             = 5
+  timeout                 = "60m"  # Increase the timeout as needed
 }
+
 
 
 resource "aws_vpc" "main" {
