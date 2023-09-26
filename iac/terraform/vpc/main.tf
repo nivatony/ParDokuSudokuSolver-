@@ -76,6 +76,7 @@ output "ec2_instance_id" {
   value = aws_instance.EC2_eks_niva.id
 }
 
+
 # Create EKS Cluster (integrated with your VPC and subnets)
 resource "aws_eks_cluster" "my_cluster" {
   name     = var.cluster_name
