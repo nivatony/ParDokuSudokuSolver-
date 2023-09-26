@@ -7,8 +7,8 @@ clusters:
 contexts:
 - context:
     cluster: kubernetes
-    user: github-actions
-  name: github-actions
+    user: github-actions-role
+  name: github-actions-role
 current-context: github-actions
 kind: Config
 preferences: {}
