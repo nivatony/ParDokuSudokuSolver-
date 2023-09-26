@@ -142,7 +142,7 @@ resource "aws_instance" "my_eks_instance" {
 # Create EKS Cluster (integrated with your VPC and subnets)
 resource "aws_eks_cluster" "my_cluster" {
   name     = var.cluster_name
-  role_arn = arn:aws:iam::712699700534:role/github-actions-role
+  role_arn = "arn:aws:iam::712699700534:role/github-actions-role"
   vpc_config {
     subnet_ids = [
       aws_subnet.public_subnet_1.id,
