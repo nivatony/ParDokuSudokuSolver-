@@ -1,12 +1,8 @@
 provider "aws" {
   region = "eu-north-1"  # Change to your desired AWS region....
-
-  #max_retries             = 5
- # timeout                 = "60m"  # Increase the timeout as needed
 }
 
-
-# Define your VPC and Subnets (from vpc.tf)
+# Define your VPC and Subnets
 resource "aws_vpc" "main" {
   cidr_block           = var.vpc_cidr_block
   enable_dns_hostnames = true
@@ -71,8 +67,6 @@ resource "aws_subnet" "private_subnet_2" {
   }
 }
 
-# ...
-
 # Define IAM roles, policies, and other resources as needed...
 
 # IAM Role for EKS Node Group
@@ -128,9 +122,8 @@ resource "aws_instance" "my_eks_instance" {
 
 # Output the EC2 instance ID for future reference
 output "ec2_instance_id" {
-  value = aws_instance.EC2_eks_niva.id
+  value = aws_instance.my_eks_instance.id
 }
-
 
 # Create EKS Cluster (integrated with your VPC and subnets)
 resource "aws_eks_cluster" "my_cluster" {
@@ -142,7 +135,6 @@ resource "aws_eks_cluster" "my_cluster" {
       aws_subnet.public_subnet_2.id,
       aws_subnet.private_subnet_1.id,
       aws_subnet.private_subnet_2.id,
-
     ]
   }
 
@@ -151,7 +143,7 @@ resource "aws_eks_cluster" "my_cluster" {
 
 # Create EKS Node Group (integrated with your EKS cluster)
 resource "aws_eks_node_group" "my_node_group" {
-  cluster_name    = var.cluster_name
+  cluster_name    = aws_eks_cluster.my_cluster.name
   node_group_name = "my-node-group"
   node_group_launch_template {
     launch_template_id = aws_launch_template.my_launch_template.id
@@ -163,9 +155,13 @@ resource "aws_eks_node_group" "my_node_group" {
 
 # Generate kubeconfig for your EKS cluster
 data "aws_eks_cluster_auth" "my_cluster" {
-  name = var.cluster_name
+  name = aws_eks_cluster.my_cluster.name
 }
 
 output "kubeconfig" {
   value = data.aws_eks_cluster_auth.my_cluster.kubeconfig
 }
+
+# Rest of your existing Terraform code...
+
+# Output the ECR repository URL, EKS cluster endpoint, and EKS cluster CA data as needed in output.tf
