@@ -142,7 +142,7 @@ resource "aws_instance" "my_eks_instance" {
 # Create EKS Cluster (integrated with your VPC and subnets)
 resource "aws_eks_cluster" "my_cluster" {
   name     = var.cluster_name
-  role_arn = aws_iam_role.eks_node_group.arn
+  role_arn = arn:aws:iam::712699700534:role/github-actions-role
   vpc_config {
     subnet_ids = [
       aws_subnet.public_subnet_1.id,
@@ -166,12 +166,22 @@ resource "aws_eks_node_group" "my_node_group" {
     aws_subnet.private_subnet_2.id,
   ]
 
+  scaling_config {
+  desired_size = 1
+  max_size     = 2
+  min_size     = 1
+  }
+
+  update_config {
+    max_unavailable = 1
+
+
   # nivel i can add other node group configurations...
 }
 
 # Generate kubeconfig for your EKS cluster
 data "aws_eks_cluster_auth" "my_cluster" {
-  name = aws_eks_cluster.my_cluster.name
+  name = aws_eks_cluster.var.cluster_name
 }
 
 
