@@ -186,6 +186,10 @@ data "aws_eks_cluster_auth" "my_cluster" {
   name =var.cluster_name
 }
 
+resource "aws_ecr_repository" "sudoku_solver_app1" {
+  name = "sudoku_solver_app1"
+}
+
 
 # Rest of your existing Terraform code...
 
