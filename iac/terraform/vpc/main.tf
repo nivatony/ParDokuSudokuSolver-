@@ -1,12 +1,12 @@
 provider "aws" {
   region = "eu-north-1"  # Change to your desired AWS region....
 
-  max_retries             = 5
-  timeout                 = "60m"  # Increase the timeout as needed
+  #max_retries             = 5
+ # timeout                 = "60m"  # Increase the timeout as needed
 }
 
 
-
+# Define your VPC and Subnets (from vpc.tf)
 resource "aws_vpc" "main" {
   cidr_block           = var.vpc_cidr_block
   enable_dns_hostnames = true
@@ -18,58 +18,9 @@ resource "aws_vpc" "main" {
   }
 }
 
-resource "aws_subnet" "public_subnet_1" {
-  vpc_id                  = aws_vpc.main.id
-  cidr_block              = var.public_subnet_1_details.cidr_block
-  availability_zone       = var.public_subnet_1_details.availability_zone
-  map_public_ip_on_launch = true
-  tags = {
-    Name                                        = "${var.cluster_name}-${var.environment}-public-subnet-${substr(var.public_subnet_1_details.availability_zone, -2, -1)}"
-    "kubernetes.io/role/elb"                    = "1"
-    "kubernetes.io/cluster/${var.cluster_name}" = "shared"
-    "ClusterName"                               = var.cluster_name
-    "Environment"                               = var.environment
-  }
-}
+# Define IAM roles, policies, and other resources as needed...
 
-resource "aws_subnet" "public_subnet_2" {
-  vpc_id                  = aws_vpc.main.id
-  cidr_block              = var.public_subnet_2_details.cidr_block
-  availability_zone       = var.public_subnet_2_details.availability_zone
-  map_public_ip_on_launch = true
-  tags = {
-    Name                                        = "${var.cluster_name}-${var.environment}-public-subnet-${substr(var.public_subnet_2_details.availability_zone, -2, -1)}"
-    "kubernetes.io/role/elb"                    = "1"
-    "kubernetes.io/cluster/${var.cluster_name}" = "shared"
-    "ClusterName"                               = var.cluster_name
-    "Environment"                               = var.environment
-  }
-}
-
-resource "aws_subnet" "private_subnet_1" {
-  vpc_id                  = aws_vpc.main.id
-  cidr_block              = var.private_subnet_1_details.cidr_block
-  availability_zone       = var.private_subnet_1_details.availability_zone
-  map_public_ip_on_launch = false
-  tags = {
-    Name                                        = "${var.cluster_name}-${var.environment}-private-subnet-${substr(var.private_subnet_1_details.availability_zone, -2, -1)}"
-    "kubernetes.io/role/internal-elb"           = "1"
-    "kubernetes.io/cluster/${var.cluster_name}" = "shared"
-  }
-}
-
-resource "aws_subnet" "private_subnet_2" {
-  vpc_id                  = aws_vpc.main.id
-  cidr_block              = var.private_subnet_2_details.cidr_block
-  availability_zone       = var.private_subnet_2_details.availability_zone
-  map_public_ip_on_launch = false
-  tags = {
-    Name                                        = "${var.cluster_name}-${var.environment}-private-subnet-${substr(var.private_subnet_2_details.availability_zone, -2, -1)}"
-    "kubernetes.io/role/internal-elb"           = "1"
-    "kubernetes.io/cluster/${var.cluster_name}" = "shared"
-  }
-}
-
+# IAM Role for EKS Node Group
 resource "aws_iam_role" "eks_node_group" {
   name = "eks-node-group-${var.cluster_name}"
 
@@ -85,6 +36,7 @@ resource "aws_iam_role" "eks_node_group" {
   })
 }
 
+# IAM Role Policy Attachments for EKS Node Group
 resource "aws_iam_role_policy_attachment" "eksworkernode_policy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy"
   role       = aws_iam_role.eks_node_group.name
@@ -105,64 +57,59 @@ resource "aws_iam_role_policy_attachment" "eks_admin_policy" {
   role       = aws_iam_role.eks_node_group.name
 }
 
-data "aws_availability_zones" "available" {
-  state = "available"
+# Create an EC2 Instance for EKS and other cluster configurations
+resource "aws_instance" "my_eks_instance" {
+  ami           = "ami-0703b5d7f7da98d1e"  # Specify your desired AMI
+  instance_type = "t2.micro"     # Specify your desired instance type
+  subnet_id     = aws_subnet.public_subnet_1.id  # Choose the appropriate subnet
+
+  # Add other EC2 configuration as needed...
+
+  # Tags for the EC2 instance
+  tags = {
+    Name = "EC2_eks_niva"  # Specify a name for your instance
+  }
 }
 
-module "eks" {
-  source  = "terraform-aws-modules/eks/aws"
-  version = "18.29.0"
+# Output the EC2 instance ID for future reference
+output "ec2_instance_id" {
+  value = aws_instance.EC2_eks_niva.id
+}
 
+# Create EKS Cluster (integrated with your VPC and subnets)
+resource "aws_eks_cluster" "my_cluster" {
+  name     = var.cluster_name
+  role_arn = aws_iam_role.eks_node_group.arn
+  vpc_config {
+    subnet_ids = [
+      aws_subnet.public_subnet_1.id,
+      aws_subnet.public_subnet_2.id,
+      aws_subnet.private_subnet_1.id,
+      aws_subnet.private_subnet_2.id,
+
+    ]
+  }
+
+  # Other cluster configurations...
+}
+
+# Create EKS Node Group (integrated with your EKS cluster)
+resource "aws_eks_node_group" "my_node_group" {
   cluster_name    = var.cluster_name
-  cluster_version = "1.27"  # Replace with your desired Kubernetes version
-
-  cluster_endpoint_private_access = true
-  cluster_endpoint_public_access  = true
-
-  vpc_id     = aws_vpc.main.id
-  subnet_ids = concat(aws_subnet.public_subnet_1[*].id, aws_subnet.public_subnet_2[*].id)  # Use public subnets
-
-  enable_irsa = true
-
-  eks_managed_node_group_defaults = {
-    disk_size = 50
+  node_group_name = "my-node-group"
+  node_group_launch_template {
+    launch_template_id = aws_launch_template.my_launch_template.id
+    version            = aws_launch_template.my_launch_template.latest_version
   }
 
-  eks_managed_node_groups = {
-    general = {
-      desired_size = 1
-      min_size     = 1
-      max_size     = 10
+  # Other node group configurations...
+}
 
-      labels = {
-        role = "general"
-      }
+# Generate kubeconfig for your EKS cluster
+data "aws_eks_cluster_auth" "my_cluster" {
+  name = aws_eks_cluster.var.cluster_name
+}
 
-      instance_types = ["t3.small"]
-      capacity_type  = "ON_DEMAND"
-    }
-
-    spot = {
-      desired_size = 1
-      min_size     = 1
-      max_size     = 10
-
-      labels = {
-        role = "spot"
-      }
-
-      taints = [{
-        key    = "market"
-        value  = "spot"
-        effect = "NO_SCHEDULE"
-      }]
-
-      instance_types = ["t3.micro"]
-      capacity_type  = "SPOT"
-    }
-  }
-
-  tags = {
-    Environment = "dev"
-  }
+output "kubeconfig" {
+  value = data.aws_eks_cluster_auth.my_cluster.kubeconfig
 }
