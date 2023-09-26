@@ -47,16 +47,8 @@ jobs:
 
       - name: Initialize Terraform (vpc)
         run: terraform init
-        
-
-      - name: Apply Terraform changes (vpc)
-        run: terraform apply -auto-approve
-        
-
-      - name: Save kubeconfig (vpc)
-        run: terraform output kubeconfig > kubeconfig_vpc.yml
-        
-
+      
+    
       # Add the Terraform plan, Terraform Plan Status, and Terraform Apply steps here
       - name: Terraform plan
         id: plan
@@ -69,19 +61,7 @@ jobs:
 
       - name: Terraform Apply
         run: terraform apply -var-file=./dev/terraform.tfvars -auto-approve -input=false
-
-      - name: Build Docker image
-        run: docker build -t sudoku-solver-app .
-
-      - name: Retrieve ECR login credentials
-        run: aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 712699700534.dkr.ecr.us-east-1.amazonaws.com
-
-      - name: Tag Docker image
-        run: docker tag sudoku-solver-app:latest 712699700534.dkr.ecr.us-east-1.amazonaws.com/sudoku-solver-app:latest
-
-      - name: Push Docker image to ECR
-        run: docker push 712699700534.dkr.ecr.us-east-1.amazonaws.com/sudoku-solver-app:latest
-
+        
       - name: Deploy to EKS (vpc)
         run: kubectl apply -f sudoku-solver-deployment.yaml
         
@@ -95,3 +75,24 @@ jobs:
 
       - name: Update Kubernetes Service (root)
         run: kubectl apply -f sudoku-solver-service.yaml
+
+        
+
+      - name: Save kubeconfig (vpc)
+        run: terraform output kubeconfig > kubeconfig_vpc.yml
+        
+
+
+      - name: Build Docker image
+        run: docker build -t sudoku-solver-app .
+
+      - name: Retrieve ECR login credentials
+        run: aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 712699700534.dkr.ecr.us-east-1.amazonaws.com
+
+      - name: Tag Docker image
+        run: docker tag sudoku-solver-app:latest 712699700534.dkr.ecr.us-east-1.amazonaws.com/sudoku-solver-app:latest
+
+      - name: Push Docker image to ECR
+        run: docker push 712699700534.dkr.ecr.us-east-1.amazonaws.com/sudoku-solver-app:latest
+
+     
