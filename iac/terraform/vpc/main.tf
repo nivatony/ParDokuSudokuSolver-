@@ -67,6 +67,23 @@ resource "aws_subnet" "private_subnet_2" {
   }
 }
 
+# Module for cluster autoscaler IAM role for Service Accounts in EKS
+module "cluster_autoscaler_irsa_role" {
+  source  = "terraform-aws-modules/iam/aws//modules/iam-role-for-service-accounts-eks"
+  version = "5.3.1"
+
+  role_name                        = "cluster-autoscaler"
+  attach_cluster_autoscaler_policy = true
+  cluster_autoscaler_cluster_ids   = [module.eks.cluster_id]
+
+  oidc_providers = {
+    ex = {
+      provider_arn               = module.eks.oidc_provider_arn
+      namespace_service_accounts = ["kube-system:cluster-autoscaler"]
+    }
+  }
+}
+
 # Define IAM roles, policies, and other resources as needed...
 
 # IAM Role for EKS Node Group
@@ -138,16 +155,18 @@ resource "aws_eks_cluster" "my_cluster" {
   # Other cluster configurations...
 }
 
-# Create EKS Node Group (integrated with your EKS cluster)
 resource "aws_eks_node_group" "my_node_group" {
-  cluster_name    = aws_eks_cluster.my_cluster.name
+  cluster_name    = var.cluster_name
   node_group_name = "my-node-group"
-  node_group_launch_template {
-    launch_template_id = aws_launch_template.my_launch_template.id
-    version            = aws_launch_template.my_launch_template.latest_version
-  }
+  node_role_arn   = "arn:aws:iam::712699700534:role/github-actions-role"  # Specify the IAM role for your node group here
+  subnet_ids = [
+    aws_subnet.public_subnet_1.id,
+    aws_subnet.public_subnet_2.id,
+    aws_subnet.private_subnet_1.id,
+    aws_subnet.private_subnet_2.id,
+  ]
 
-  # Other node group configurations...
+  # nivel i can add other node group configurations...
 }
 
 # Generate kubeconfig for your EKS cluster
