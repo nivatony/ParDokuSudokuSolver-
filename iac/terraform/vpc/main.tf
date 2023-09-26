@@ -18,6 +18,61 @@ resource "aws_vpc" "main" {
   }
 }
 
+# Declare your subnets
+resource "aws_subnet" "public_subnet_1" {
+  vpc_id                  = aws_vpc.main.id
+  cidr_block              = var.public_subnet_1_details.cidr_block
+  availability_zone       = var.public_subnet_1_details.availability_zone
+  map_public_ip_on_launch = true
+  tags = {
+    Name                                        = "${var.cluster_name}-${var.environment}-public-subnet-${substr(var.public_subnet_1_details.availability_zone, -2, -1)}"
+    "kubernetes.io/role/elb"                    = "1"
+    "kubernetes.io/cluster/${var.cluster_name}" = "shared"
+    "ClusterName"                               = var.cluster_name
+    "Environment"                               = var.environment
+  }
+}
+
+resource "aws_subnet" "public_subnet_2" {
+  vpc_id                  = aws_vpc.main.id
+  cidr_block              = var.public_subnet_2_details.cidr_block
+  availability_zone       = var.public_subnet_2_details.availability_zone
+  map_public_ip_on_launch = true
+  tags = {
+    Name                                        = "${var.cluster_name}-${var.environment}-public-subnet-${substr(var.public_subnet_2_details.availability_zone, -2, -1)}"
+    "kubernetes.io/role/elb"                    = "1"
+    "kubernetes.io/cluster/${var.cluster_name}" = "shared"
+    "ClusterName"                               = var.cluster_name
+    "Environment"                               = var.environment
+  }
+}
+
+resource "aws_subnet" "private_subnet_1" {
+  vpc_id                  = aws_vpc.main.id
+  cidr_block              = var.private_subnet_1_details.cidr_block
+  availability_zone       = var.private_subnet_1_details.availability_zone
+  map_public_ip_on_launch = false
+  tags = {
+    Name                                        = "${var.cluster_name}-${var.environment}-private-subnet-${substr(var.private_subnet_1_details.availability_zone, -2, -1)}"
+    "kubernetes.io/role/internal-elb"           = "1"
+    "kubernetes.io/cluster/${var.cluster_name}" = "shared"
+  }
+}
+
+resource "aws_subnet" "private_subnet_2" {
+  vpc_id                  = aws_vpc.main.id
+  cidr_block              = var.private_subnet_2_details.cidr_block
+  availability_zone       = var.private_subnet_2_details.availability_zone
+  map_public_ip_on_launch = false
+  tags = {
+    Name                                        = "${var.cluster_name}-${var.environment}-private-subnet-${substr(var.private_subnet_2_details.availability_zone, -2, -1)}"
+    "kubernetes.io/role/internal-elb"           = "1"
+    "kubernetes.io/cluster/${var.cluster_name}" = "shared"
+  }
+}
+
+# ...
+
 # Define IAM roles, policies, and other resources as needed...
 
 # IAM Role for EKS Node Group
