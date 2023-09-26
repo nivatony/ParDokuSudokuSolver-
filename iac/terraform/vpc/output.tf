@@ -7,7 +7,7 @@ output "kubeconfig" {
 }
 
 output "ecr_repository_url" {
-  value = aws_ecr_repository.my_repository.repository_url
+  value = aws_ecr_repository.sudoku_solver_app1.repository_url
 }
 
 output "eks_cluster_endpoint" {
