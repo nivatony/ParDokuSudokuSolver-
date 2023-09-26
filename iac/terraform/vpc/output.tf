@@ -20,11 +20,6 @@ data "template_file" "kubeconfig" {
   }
 }
 
-output "kubeconfig" {
-  value = data.template_file.kubeconfig.rendered
-}
-
-
 output "ecr_repository_url" {
   value = aws_ecr_repository.sudoku_solver_app1.repository_url
 }
