@@ -1,6 +1,4 @@
-data "aws_eks_cluster" "my_cluster" {
-  name = var.cluster_name
-}
+
 
 output "ec2_instance_id" {
   value = aws_instance.my_eks_instance.id
