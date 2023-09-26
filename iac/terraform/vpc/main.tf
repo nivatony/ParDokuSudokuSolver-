@@ -119,16 +119,20 @@ resource "aws_iam_role_policy_attachment" "ec2container_policy" {
   role       = aws_iam_role.eks_node_group.name
 }
 
-resource "aws_iam_role_policy_attachment" "eks_admin_policy" {
-  policy_arn = "arn:aws:iam::aws:policy/AmazonEKSAdminPolicy"
+resource "aws_iam_role_policy_attachment" "AmazonEKSVPCResourceController" {
+  policy_arn = "arn:aws:iam::aws:policy/AmazonEKSVPCResourceController"
   role       = aws_iam_role.eks_node_group.name
 }
 
 # Create an EC2 Instance for EKS and other cluster configurations
 resource "aws_instance" "my_eks_instance" {
-  ami           = "ami-0703b5d7f7da98d1e"  # Specify your desired AMI
+  ami           = "ami-0eb7496c2e0403237" # Specify your desired AMI
   instance_type = "t2.micro"     # Specify your desired instance type
   subnet_id     = aws_subnet.public_subnet_1.id  # Choose the appropriate subnet
+
+lifecycle {
+create_before_destroy = true
+
 
   # Add other EC2 configuration as needed...
 
