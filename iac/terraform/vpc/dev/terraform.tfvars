@@ -1,4 +1,4 @@
-cluster_name = "awesome-cluster"
+cluster_name = "awesome_cluster"
 
 environment = "dev"
 
