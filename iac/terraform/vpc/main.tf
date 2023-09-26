@@ -120,10 +120,7 @@ resource "aws_instance" "my_eks_instance" {
   }
 }
 
-# Output the EC2 instance ID for future reference
-output "ec2_instance_id" {
-  value = aws_instance.my_eks_instance.id
-}
+
 
 # Create EKS Cluster (integrated with your VPC and subnets)
 resource "aws_eks_cluster" "my_cluster" {
@@ -158,9 +155,6 @@ data "aws_eks_cluster_auth" "my_cluster" {
   name = aws_eks_cluster.my_cluster.name
 }
 
-output "kubeconfig" {
-  value = data.aws_eks_cluster_auth.my_cluster.kubeconfig
-}
 
 # Rest of your existing Terraform code...
 
