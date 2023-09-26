@@ -68,21 +68,22 @@ resource "aws_subnet" "private_subnet_2" {
 }
 
 # Module for cluster autoscaler IAM role for Service Accounts in EKS
-module "cluster_autoscaler_irsa_role" {
-  source  = "terraform-aws-modules/iam/aws//modules/iam-role-for-service-accounts-eks"
-  version = "5.3.1"
+#module "cluster_autoscaler_irsa_role" {
+  #source  = "terraform-aws-modules/iam/aws//modules/iam-role-for-service-accounts-eks"
+  #version = "5.3.1"
 
-  role_name                        = "cluster-autoscaler"
-  attach_cluster_autoscaler_policy = true
-  cluster_autoscaler_cluster_ids   = [module.var.cluster_name_id]
+  #role_name                        = "cluster-autoscaler"
+  ##attach_cluster_autoscaler_policy = true
+  #cluster_autoscaler_cluster_ids   = [module.var.cluster_name_id]
 
-  oidc_providers = {
-    ex = {
-      provider_arn               = var.cluster_name.oidc_provider_arn
-      namespace_service_accounts = ["kube-system:cluster-autoscaler"]
-    }
-  }
-}
+  #oidc_providers = {
+   # ex = {
+      #namespace_service_accounts = ["kube-system:cluster-autoscaler"]
+     # provider_arn               = var.cluster_name.oidc_provider_arn
+   #   namespace_service_accounts = ["kube-system:cluster-autoscaler"]
+   # }
+  #}
+#}
 
 # Define IAM roles, policies, and other resources as needed...
 
