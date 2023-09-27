@@ -107,26 +107,6 @@ data "aws_availability_zones" "available" {
 
 
 
-module "eks_node_group" {
-  source  = "cloudposse/eks-node-group/aws"
-  version = "2.4.0"
-
-  subnet_ids        = module.subnets.private_subnet_ids
-  cluster_name      = module.eks_cluster.eks_cluster_id
-  instance_types    = var.instance_types
-  desired_size      = var.desired_size
-  min_size          = var.min_size
-  max_size          = var.max_size
-  kubernetes_labels = var.kubernetes_labels
-
-  # Prevent the node groups from being created before the Kubernetes aws-auth ConfigMap
-  module_depends_on = module.eks_cluster.kubernetes_config_map_id
-
-  security_group_ids = [aws_security_group.node_group_one.id]  # Add this line
-
-  context = module.this.context
-}
-
 
 
 # Create EKS Cluster (integrated with your VPC and subnets)
@@ -150,8 +130,6 @@ resource "aws_eks_cluster" "my_cluster" {
 resource "aws_eks_node_group" ""my-node-group"" {
   cluster_name    = aws_eks_cluster.my_cluster.name
   node_group_name = var.node_group_name
-  node_role_arn   = aws_iam_role.niva.arn
-  subnet_ids      = var.aws_public_subnet
   instance_types  = var.instance_types
 
   remote_access {
