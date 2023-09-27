@@ -11,8 +11,7 @@ resource "null_resource" "configure_kubectl" {
       aws eks update-kubeconfig --name ${aws_eks_cluster.my_cluster.name}
     EOT
 
-    # Specify the working directory if needed.
-    working_dir = ./
+   
   }
 }
 
