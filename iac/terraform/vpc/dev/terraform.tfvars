@@ -24,6 +24,15 @@ private_subnet_2_details = {
   cidr_block        = "10.0.4.0/24"
 }
 
+
+key_pair = "MyKeyPair"
+instance_types = "t2.micro"
+
+scaling_min_size = 1
+scaling_max_size = 3
+scaling_desired_size = 2
+
+node_group_name = "my-node-group"
 eks_node_group_role_name = "node_group_role_niva"
 eks_worker_node_policy_arn = "worker_node_policy_arn_niva"
 eks_cni_policy_arn = "cni_policy_arn_niva"
