@@ -229,8 +229,3 @@ resource "aws_iam_role_policy_attachment" "niva-AmazonEC2ContainerRegistryReadOn
 resource "aws_ecr_repository" "sudoku_solver_app1" {
   name = "sudoku_solver_app1"
 }
-
-
-# Rest of your existing Terraform code...
-
-# Output the ECR repository URL, EKS cluster endpoint, and EKS cluster CA data as needed in output.tf
