@@ -85,22 +85,6 @@ resource "aws_subnet" "private_subnet_2" {
   #}
 #}
 
-
-
-
-# Create an EC2 Instance for EKS and other cluster configurations
-resource "aws_instance" "my_eks_instance" {
-  ami           = "ami-0703b5d7f7da98d1e" # Specify your desired AMI
-  instance_type = "t3.micro"     # Specify your desired instance type
-  subnet_id     = aws_subnet.public_subnet_1.id  # Choose the appropriate subnet
-
-lifecycle {
-create_before_destroy = true
-}
-}
-
-
-
 # Create EKS Cluster (integrated with your VPC and subnets)
 resource "aws_eks_cluster" "my_cluster" {
   name     = var.cluster_name
@@ -112,40 +96,97 @@ resource "aws_eks_cluster" "my_cluster" {
       aws_subnet.private_subnet_1.id,
       aws_subnet.private_subnet_2.id,
     ]
+
   }
 
   # Other cluster configurations...
-}
 
-resource "aws_eks_node_group" "my_node_group" {
-  cluster_name    = var.cluster_name
-  node_group_name = "my-node-group"
-  node_role_arn   = "arn:aws:iam::712699700534:role/github-actions-role"  # Specify the IAM role for your node group here
-  subnet_ids = [
-    aws_subnet.public_subnet_1.id,
-    aws_subnet.public_subnet_2.id,
-    aws_subnet.private_subnet_1.id,
-    aws_subnet.private_subnet_2.id,
-  ]
 
-  scaling_config {
-  desired_size = 1
-  max_size     = 2
-  min_size     = 1
+  enable_irsa = true
+  eks_managed_node_group_defaults = {
+    disk_size = 50
   }
 
-  update_config {
-    max_unavailable = 1
+eks_managed_node_groups = {
+    general = {
+      desired_size = 1
+      min_size     = 1
+      max_size     = 10
+
+      labels = {
+        role = "general"
+      }
+
+      instance_types = ["t3.small"]
+      capacity_type  = "ON_DEMAND"
+    }
+
+    spot = {
+      desired_size = 1
+      min_size     = 1
+      max_size     = 10
+
+      labels = {
+        role = "spot"
+      }
+
+      taints = [{
+        key    = "market"
+        value  = "spot"
+        effect = "NO_SCHEDULE"
+      }]
+
+      instance_types = ["t3.micro"]
+      capacity_type  = "SPOT"
+    }
+  }
 
 
-  # nivel i can add other node group configurations...
+     manage_aws_auth_configmap = true
+        aws_auth_roles = [
+       {
+      role_arn = "arn:aws:iam::712699700534:role/github-actions-role"
+    
+      groups   = ["system:masters"]
+    },
+  ]
+   node_security_group_additional_rules = {
+    ingress_allow_access_from_control_plane = {
+      type                          = "ingress"
+      protocol                      = "tcp"
+      from_port                     = 9443
+      to_port                       = 9443
+      source_cluster_security_group = true
+      description                   = "Allow access from control plane to webhook port of AWS load balancer controller"
+    }
+  }
+
+  tags = {
+    Environment = "dev"
+  }
 }
+
+
+
+# https://github.com/terraform-aws-modules/terraform-aws-eks/issues/2009
+data "aws_eks_cluster" "default" {
+  name = mar.cluster_name_id
 }
 
+data "aws_eks_cluster_auth" "default" {
+  name = var.cluster_name_id
+}
 
-# Generate kubeconfig for your EKS cluster
-data "aws_eks_cluster_auth" "my_cluster" {
-  name =var.cluster_name
+provider "kubernetes" {
+  host                   = data.aws_eks_cluster.default.endpoint
+  cluster_ca_certificate = base64decode(data.aws_eks_cluster.default.certificate_authority[0].data)
+  # token                  = data.aws_eks_cluster_auth.default.token
+
+  exec {
+    api_version = "client.authentication.k8s.io/v1beta1"
+    args        = ["eks", "get-token", "--cluster-name", data.aws_eks_cluster.default.id]
+    command     = "aws"
+  }
 }
 
 resource "aws_ecr_repository" "sudoku_solver_app1" {
