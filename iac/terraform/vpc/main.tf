@@ -141,7 +141,7 @@ resource "aws_security_group" "node_group_one" {
   }
 }
 
-resource "aws_iam_role" "iamroleniva" {
+resource "aws_iam_role" "niva1" {
   name = "eks-cluster-niva"
 
   assume_role_policy = <<POLICY
@@ -161,7 +161,7 @@ POLICY
 }
 
 resource "aws_iam_role_policy_attachment" "niva-AmazonEKSClusterPolicy" {
-  policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
+  policy_arn = "arn:aws:iam::712699700534:policy/AmazonEKSClusterPolicy"
   role       = aws_iam_role.niva1.name
 }
 
@@ -169,10 +169,10 @@ resource "aws_iam_role_policy_attachment" "niva-AmazonEKSClusterPolicy" {
 # Reference: https://docs.aws.amazon.com/eks/latest/userguide/security-groups-for-pods.html
 resource "aws_iam_role_policy_attachment" "niva-AmazonEKSVPCResourceController" {
   policy_arn = "arn:aws:iam:712699700534:policy/AmazonEKSVPCResourceController"
-  role       = aws_iam_role.niva.name
+  role       = aws_iam_role.niva1.name
 }
 
-resource "aws_iam_role" "niva1" {
+resource "aws_iam_role" "niva" {
   name = "eks-node-group-cloudquicklabs"
 
   assume_role_policy = jsonencode({
