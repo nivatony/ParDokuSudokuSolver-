@@ -1,7 +1,6 @@
 provider "aws" {
  region = "eu-north-1"  # Change to your desired AWS region....
 }
-#
 
 # Define your VPC and Subnets
 resource "aws_vpc" "main" {
