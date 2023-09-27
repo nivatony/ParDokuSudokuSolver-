@@ -100,31 +100,8 @@ resource "aws_eks_cluster" "my_cluster" {
   }
 
   # Other cluster configurations...
-
-      instance_types = ["t3.small"]
-      capacity_type  = "ON_DEMAND"
-    }
-
-    spot = {
-      desired_size = 1
-      min_size     = 1
-      max_size     = 10
-
-      labels = {
-        role = "spot"
-      }
-
-      taints = [{
-        key    = "market"
-        value  = "spot"
-        effect = "NO_SCHEDULE"
-      }]
-
-      instance_types = ["t3.micro"]
-      capacity_type  = "SPOT"
-    }
   }
-}
+
 resource "aws_ecr_repository" "sudoku_solver_app1" {
   name = "sudoku_solver_app1"
 }
