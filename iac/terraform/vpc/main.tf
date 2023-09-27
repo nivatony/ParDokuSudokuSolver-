@@ -146,7 +146,7 @@ resource "aws_security_group" "node_group_one" {
 }
 
 resource "aws_iam_role" "niva1" {
-  name = "eks-cluster-niva"
+  name = "awsome_cluster"
 
   assume_role_policy = <<POLICY
 {
@@ -164,47 +164,7 @@ resource "aws_iam_role" "niva1" {
 POLICY
 }
 
-resource "aws_iam_role_policy_attachment" "niva-AmazonEKSClusterPolicy" {
-  policy_arn = "arn:aws:iam::712699700534:policy/AmazonEKSClusterPolicy"
-  role       = aws_iam_role.niva1.name
-}
 
-# Optionally, enable Security Groups for Pods
-# Reference: https://docs.aws.amazon.com/eks/latest/userguide/security-groups-for-pods.html
-resource "aws_iam_role_policy_attachment" "niva-AmazonEKSVPCResourceController" {
-  policy_arn = "arn:aws:iam:712699700534:policy/AmazonEKSVPCResourceController"
-  role       = aws_iam_role.niva1.name
-}
-
-resource "aws_iam_role" "niva" {
-  name = "eks-node-group-cloudquicklabs"
-
-  assume_role_policy = jsonencode({
-    Statement = [{
-      Action = "sts:AssumeRole"
-      Effect = "Allow"
-      Principal = {
-        Service = "ec2.amazonaws.com"
-      }
-    }]
-    Version = "2012-10-17"
-  })
-}
-
-resource "aws_iam_role_policy_attachment" "niva-AmazonEKSWorkerNodePolicy" {
-  policy_arn = "arn:aws:iam::712699700534:policy/AmazonEKSWorkerNodePolicy"
-  role       = aws_iam_role.niva.name
-}
-
-resource "aws_iam_role_policy_attachment" "niva-AmazonEKS_CNI_Policy" {
-  policy_arn = "arn:aws:iam::712699700534:policy/AmazonEKS_CNI_Policy"
-  role       = aws_iam_role.niva.name
-}
-
-resource "aws_iam_role_policy_attachment" "niva-AmazonEC2ContainerRegistryReadOnly" {
-  policy_arn = "arn:aws:iam::712699700534:policy/AmazonEC2ContainerRegistryReadOnly"
-  role       = aws_iam_role.niva.name
-}
 
 
 resource "aws_ecr_repository" "sudoku_solver_app1" {
