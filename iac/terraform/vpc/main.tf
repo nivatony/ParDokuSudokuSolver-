@@ -126,7 +126,7 @@ resource "aws_iam_role_policy_attachment" "AmazonEKSVPCResourceController" {
 
 # Create an EC2 Instance for EKS and other cluster configurations
 resource "aws_instance" "my_eks_instance" {
-  ami           = "ami-0eb7496c2e0403237" # Specify your desired AMI
+  ami           = "ami-03a6eaae9938c858c" # Specify your desired AMI
   instance_type = "t2.micro"     # Specify your desired instance type
   subnet_id     = aws_subnet.public_subnet_1.id  # Choose the appropriate subnet
 
