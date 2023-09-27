@@ -63,6 +63,14 @@ jobs:
         run: terraform apply -var-file=./dev/terraform.tfvars -auto-approve -input=false
 
 
+      - name: Configure kubectl
+        run: |
+         mkdir -p $HOME/.kube
+         echo "${{ steps.get_kubeconfig.outputs.kubeconfig }}" > $HOME/.kube/config
+        env:
+          KUBECONFIG: $HOME/.kube/config
+
+
       - name: Update Kubernetes Ingress (root)
         run: kubectl apply -f sudoku-solver-ingress.yaml
  
