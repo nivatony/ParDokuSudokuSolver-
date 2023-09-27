@@ -61,11 +61,6 @@ jobs:
 
       - name: Terraform Apply
         run: terraform apply -var-file=./dev/terraform.tfvars -auto-approve -input=false
-
-
-     
-      - name: Save kubeconfig (vpc)
-        run: terraform output kubeconfig > kubeconfig_vpc.yml
         
 
 
