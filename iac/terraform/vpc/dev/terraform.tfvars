@@ -23,3 +23,10 @@ private_subnet_2_details = {
   availability_zone = "eu-north-1c"
   cidr_block        = "10.0.4.0/24"
 }
+
+eks_node_group_role_name = "node_group_role_niva"
+eks_worker_node_policy_arn = "worker_node_policy_arn_niva"
+eks_cni_policy_arn = "cni_policy_arn_niva"
+ec2container_policy_arn = "c2container_policy_arn_niva"
+eks_vpc_resource_controller_policy_arn = "vpc_resource_controller_policy_arn_niva"
+
