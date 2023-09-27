@@ -73,7 +73,7 @@ jobs:
       - name: Use KUBECONFIG
         run: |
           source $HOME/.bashrc
-          kubectl config current-context
+          kubectl config current-context 
 
 
       - name: Update Kubernetes Service (root)
