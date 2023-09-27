@@ -137,9 +137,9 @@ create_before_destroy = true
   # Add other EC2 configuration as needed...
 
   # Tags for the EC2 instance
-  tags = {
-    Name = "EC2_eks_niva"  # Specify a name for your instance
-  }
+  # tags = {
+   #  Name = "EC2_eks_niva"  # Specify a name for your instance
+   #}
 }
 
 
