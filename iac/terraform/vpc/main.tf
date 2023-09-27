@@ -132,7 +132,7 @@ resource "aws_instance" "my_eks_instance" {
 
 lifecycle {
 create_before_destroy = true
-
+}
 
   # Add other EC2 configuration as needed...
 
