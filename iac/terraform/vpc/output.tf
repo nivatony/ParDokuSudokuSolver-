@@ -15,13 +15,13 @@ output "ecr_repository_url" {
   value = aws_ecr_repository.sudoku_solver_app1.repository_url
 }
 
-output "aws_public_subnet" {
-  value = aws_subnet.public_subnet_.1.id
-}
+#output "aws_public_subnet" {
+#  value = aws_subnet.public_subnet_.1.id
+#}
 
-output "aws_private_subnet" {
-  value = aws_subnet.private_subnet_.1.id
-}
+#output "aws_private_subnet" {
+#  value = aws_subnet.private_subnet_.1.id
+#}
 
 
 output "vpc_id" {
