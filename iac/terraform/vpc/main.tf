@@ -85,23 +85,7 @@ resource "aws_subnet" "private_subnet_2" {
   #}
 #}
 
-# Define IAM roles, policies, and other resources as needed...
 
-# IAM Role for EKS Node Group
-resource "aws_iam_role" "eks_node_group" {
-  name = "eks-node-group-${var.cluster_name}"
-
-  assume_role_policy = jsonencode({
-    Statement = [{
-      Action = "sts:AssumeRole"
-      Effect = "Allow"
-      Principal = {
-        Service = "ec2.amazonaws.com"
-      }
-    }]
-    Version = "2012-10-17"
-  })
-}
 
 # IAM Role Policy Attachments for EKS Node Group
 resource "aws_iam_role_policy_attachment" "eksworkernode_policy" {
@@ -126,8 +110,8 @@ resource "aws_iam_role_policy_attachment" "AmazonEKSVPCResourceController" {
 
 # Create an EC2 Instance for EKS and other cluster configurations
 resource "aws_instance" "my_eks_instance" {
-  ami           = "ami-03a6eaae9938c858c" # Specify your desired AMI
-  instance_type = "t2.micro"     # Specify your desired instance type
+  ami           = "ami-0703b5d7f7da98d1e" # Specify your desired AMI
+  instance_type = "t3.micro"     # Specify your desired instance type
   subnet_id     = aws_subnet.public_subnet_1.id  # Choose the appropriate subnet
 
 lifecycle {
