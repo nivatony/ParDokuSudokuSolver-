@@ -96,8 +96,114 @@ resource "aws_eks_cluster" "my_cluster" {
       aws_subnet.private_subnet_1.id,
       aws_subnet.private_subnet_2.id,
     ]
-
+    endpoint_public_access  = var.endpoint_public_access
+    endpoint_private_access = var.endpoint_private_access
+    public_access_cidrs     = var.public_access_cidrs
+    security_group_ids      = [aws_security_group.node_group_one.id]
   }
+
+
+resource "aws_eks_node_group" "nodegroup" {
+  cluster_name    = aws_eks_cluster.my_cluster.name
+  node_group_name = var.node_group_name
+  node_role_arn   = aws_iam_role.cloudquicklabs2.arn
+  subnet_ids      = var.aws_public_subnet
+  instance_types  = var.instance_types
+
+  remote_access {
+    source_security_group_ids = [aws_security_group.node_group_one.id]
+    ec2_ssh_key               = var.key_pair
+  }
+
+  scaling_config {
+    desired_size = var.scaling_desired_size
+    max_size     = var.scaling_max_size
+    min_size     = var.scaling_min_size
+  }
+
+
+resource "aws_security_group" "node_group_one" {
+  name_prefix = "node_group_one"
+  vpc_id      = var.vpc_id
+
+  ingress {
+    from_port = 80
+    to_port   = 80
+    protocol  = "tcp"
+
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
+resource "aws_iam_role" "iamroleniva" {
+  name = "eks-cluster-niva"
+
+  assume_role_policy = <<POLICY
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "eks.amazonaws.com"
+      },
+      "Action": "sts:AssumeRole"
+    }
+  ]
+}
+POLICY
+}
+
+resource "aws_iam_role_policy_attachment" "niva-AmazonEKSClusterPolicy" {
+  policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
+  role       = aws_iam_role.niva1.name
+}
+
+# Optionally, enable Security Groups for Pods
+# Reference: https://docs.aws.amazon.com/eks/latest/userguide/security-groups-for-pods.html
+resource "aws_iam_role_policy_attachment" "niva-AmazonEKSVPCResourceController" {
+  policy_arn = "arn:aws:iam:712699700534:policy/AmazonEKSVPCResourceController"
+  role       = aws_iam_role.niva.name
+}
+
+resource "aws_iam_role" "niva1" {
+  name = "eks-node-group-cloudquicklabs"
+
+  assume_role_policy = jsonencode({
+    Statement = [{
+      Action = "sts:AssumeRole"
+      Effect = "Allow"
+      Principal = {
+        Service = "ec2.amazonaws.com"
+      }
+    }]
+    Version = "2012-10-17"
+  })
+}
+
+resource "aws_iam_role_policy_attachment" "niva-AmazonEKSWorkerNodePolicy" {
+  policy_arn = "arn:aws:iam::712699700534:policy/AmazonEKSWorkerNodePolicy"
+  role       = aws_iam_role.niva.name
+}
+
+resource "aws_iam_role_policy_attachment" "niva-AmazonEKS_CNI_Policy" {
+  policy_arn = "arn:aws:iam::712699700534:policy/AmazonEKS_CNI_Policy"
+  role       = aws_iam_role.niva.name
+}
+
+resource "aws_iam_role_policy_attachment" "niva-AmazonEC2ContainerRegistryReadOnly" {
+  policy_arn = "arn:aws:iam::712699700534:policy/AmazonEC2ContainerRegistryReadOnly"
+  role       = aws_iam_role.niva.name
+}
+
+
+
 
   # Other cluster configurations...
   }
