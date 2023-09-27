@@ -101,18 +101,6 @@ resource "aws_eks_cluster" "my_cluster" {
 
   # Other cluster configurations...
 
-
-
-eks_managed_node_groups = {
-    general = {
-      desired_size = 1
-      min_size     = 1
-      max_size     = 10
-
-      labels = {
-        role = "general"
-      }
-
       instance_types = ["t3.small"]
       capacity_type  = "ON_DEMAND"
     }
