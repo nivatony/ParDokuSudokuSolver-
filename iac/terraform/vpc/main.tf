@@ -123,19 +123,14 @@ resource "aws_eks_cluster" "my_cluster" {
     endpoint_public_access  = var.endpoint_public_access
     endpoint_private_access = var.endpoint_private_access
     public_access_cidrs     = var.public_access_cidrs
-    security_group_ids      = [aws_security_group.node_group_one.id]
+  
   }
 }
 
 resource "aws_eks_node_group" ""my-node-group"" {
-  cluster_name    = aws_eks_cluster.my_cluster.name
   node_group_name = var.node_group_name
   instance_types  = var.instance_types
-
-  remote_access {
-    source_security_group_ids = [aws_security_group.node_group_one.id]
-    ec2_ssh_key               = var.key_pair
-  }
+}
 
   scaling_config {
     desired_size = var.scaling_desired_size
