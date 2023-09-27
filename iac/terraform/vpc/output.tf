@@ -16,11 +16,11 @@ output "ecr_repository_url" {
 }
 
 output "aws_public_subnet" {
-  value = aws_subnet.public_subnet_.*.id
+  value = aws_subnet.public_subnet_.1.id
 }
 
 output "aws_private_subnet" {
-  value = aws_subnet.private_subnet_.*.id
+  value = aws_subnet.private_subnet_.1.id
 }
 
 
@@ -30,4 +30,3 @@ output "vpc_id" {
 
 
 # Define other resources and configurations as needed..
-
