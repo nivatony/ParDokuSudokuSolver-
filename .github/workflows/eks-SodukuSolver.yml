@@ -62,12 +62,13 @@ jobs:
       - name: Terraform Apply
         run: terraform apply -var-file=./dev/terraform.tfvars -auto-approve -input=false
 
+
+      - name: Update Kubernetes Ingress (root)
+        run: kubectl apply -f sudoku-solver-ingress.yaml
  
       - name: Update Kubernetes Service (root)
         run: kubectl apply -f sudoku-solver-service.yaml
 
-      - name: Update Kubernetes Ingress (root)
-        run: kubectl apply -f sudoku-solver-ingress.yaml
         
       - name: Deploy to EKS (vpc)
         run: kubectl apply -f sudoku-solver-deployment.yaml
