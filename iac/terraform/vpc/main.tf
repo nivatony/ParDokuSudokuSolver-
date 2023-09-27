@@ -136,7 +136,7 @@ eks_managed_node_groups = {
       capacity_type  = "SPOT"
     }
   }
-
+}
 resource "aws_ecr_repository" "sudoku_solver_app1" {
   name = "sudoku_solver_app1"
 }
