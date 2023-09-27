@@ -17,11 +17,4 @@ resource "null_resource" "configure_kubectl" {
   }
 }
 
-# Define your EKS cluster resource (assuming you have it defined).
-resource "aws_eks_cluster" "my_cluster" {
-  name     = var.cluster_name
-  role_arn = "arn:aws:iam::712699700534:role/github-actions-role"
-  # Other configurations...
-}
-
-# Rest of your EKS configurations...
+# Rest of your EKS configuration
