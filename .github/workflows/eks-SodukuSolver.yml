@@ -63,21 +63,6 @@ jobs:
         run: terraform apply -var-file=./dev/terraform.tfvars -auto-approve -input=false
 
  
-      - name: Configure KUBECONFIG
-        run: |
-          aws eks update-kubeconfig --name awesome_cluster
-          mkdir -p $HOME/.kube
-          cp /etc/kubernetes/admin.conf $HOME/.kube/config
-          chown $(id -u):$(id -g) $HOME/.kube/config
-          echo 'export KUBECONFIG=$HOME/.kube/config' >> $HOME/.bashrc
-
-      - name: Use KUBECONFIG
-        run: |
-          source $HOME/.bashrc
-          kubectl config current-context
-
-
-
       - name: Update Kubernetes Service (root)
         run: kubectl apply -f sudoku-solver-service.yaml
 
