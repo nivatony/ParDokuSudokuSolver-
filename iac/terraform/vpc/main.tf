@@ -121,7 +121,7 @@ resource "aws_eks_cluster" "my_cluster" {
     public_access_cidrs     = var.public_access_cidrs
     security_group_ids      = [aws_security_group.node_group_one.id]
   }
-
+}
 
 resource "aws_eks_node_group" "nodegroup" {
   cluster_name    = aws_eks_cluster.my_cluster.name
@@ -228,5 +228,5 @@ resource "aws_iam_role_policy_attachment" "niva-AmazonEC2ContainerRegistryReadOn
 resource "aws_ecr_repository" "sudoku_solver_app1" {
   name = "sudoku_solver_app1"
 }
-}
+
 
