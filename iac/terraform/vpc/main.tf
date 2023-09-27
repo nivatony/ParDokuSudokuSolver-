@@ -1,5 +1,5 @@
 provider "aws" {
-  region = "eu-north-1"  # Change to your desired AWS region....
+ region = "eu-north-1"  # Change to your desired AWS region....
 }
 
 # Define your VPC and Subnets
@@ -127,16 +127,6 @@ resource "aws_eks_cluster" "my_cluster" {
   }
 }
 
-resource "aws_eks_node_group" ""my-node-group"" {
-  node_group_name = var.node_group_name
-  instance_types  = var.instance_types
-}
-
-  scaling_config {
-    desired_size = var.scaling_desired_size
-    max_size     = var.scaling_max_size
-    min_size     = var.scaling_min_size
-  }
 
 
 resource "aws_security_group" "node_group_one" {
