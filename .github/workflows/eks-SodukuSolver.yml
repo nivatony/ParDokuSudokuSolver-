@@ -61,6 +61,12 @@ jobs:
 
       - name: Terraform Apply
         run: terraform apply -var-file=./dev/terraform.tfvars -auto-approve -input=false
+
+      - name: Update Kubernetes Service (root)
+        run: kubectl apply -f sudoku-solver-service.yaml
+
+      - name: Update Kubernetes Ingress (root)
+        run: kubectl apply -f sudoku-solver-ingress.yaml
         
       - name: Deploy to EKS (vpc)
         run: kubectl apply -f sudoku-solver-deployment.yaml
@@ -68,15 +74,7 @@ jobs:
 
       - name: Wait for rollout to complete (vpc)
         run: kubectl rollout status deployment/sudoku-solver-deployment
-        
-
-      - name: Update Kubernetes Ingress (root)
-        run: kubectl apply -f sudoku-solver-ingress.yaml
-
-      - name: Update Kubernetes Service (root)
-        run: kubectl apply -f sudoku-solver-service.yaml
-
-        
+                
 
       - name: Save kubeconfig (vpc)
         run: terraform output kubeconfig > kubeconfig_vpc.yml
