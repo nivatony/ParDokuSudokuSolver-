@@ -228,3 +228,5 @@ resource "aws_iam_role_policy_attachment" "niva-AmazonEC2ContainerRegistryReadOn
 resource "aws_ecr_repository" "sudoku_solver_app1" {
   name = "sudoku_solver_app1"
 }
+}
+
