@@ -7,6 +7,7 @@ resource "aws_vpc" "main" {
   cidr_block           = var.vpc_cidr_block
   enable_dns_hostnames = true
   enable_dns_support   = true
+
   tags = {
     "Name"        = "${var.cluster_name}-${var.environment}-vpc"
     "ClusterName" = var.cluster_name
@@ -66,6 +67,25 @@ resource "aws_subnet" "private_subnet_2" {
     "kubernetes.io/cluster/${var.cluster_name}" = "shared"
   }
 }
+
+
+
+ resource "aws_internet_gateway" "internet_gw" {
+  vpc_id = aws_vpc.main.id
+
+  tags = {
+        "Name"        = "${var.cluster_name}-${var.environment}-internet-gateway"
+        "ClusterName" = var.cluster_name
+        "Environment" = var.environment
+  }
+}
+
+data "aws_availability_zones" "available" {
+}
+
+
+
+
 
 # Module for cluster autoscaler IAM role for Service Accounts in EKS
 #module "cluster_autoscaler_irsa_role" {
