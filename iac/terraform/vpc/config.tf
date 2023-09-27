@@ -13,7 +13,7 @@ resource "null_resource" "configure_kubectl" {
     EOT
 
     # Specify the working directory if needed.
-    working_dir = path.module
+    working_dir = ./
   }
 }
 
