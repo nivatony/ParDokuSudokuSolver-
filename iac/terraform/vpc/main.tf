@@ -87,26 +87,6 @@ resource "aws_subnet" "private_subnet_2" {
 
 
 
-# IAM Role Policy Attachments for EKS Node Group
-resource "aws_iam_role_policy_attachment" "eksworkernode_policy" {
-  policy_arn = "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy"
-  role       = aws_iam_role.eks_node_group.name
-}
-
-resource "aws_iam_role_policy_attachment" "eks_cni_policy" {
-  policy_arn = "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"
-  role       = aws_iam_role.eks_node_group.name
-}
-
-resource "aws_iam_role_policy_attachment" "ec2container_policy" {
-  policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
-  role       = aws_iam_role.eks_node_group.name
-}
-
-resource "aws_iam_role_policy_attachment" "AmazonEKSVPCResourceController" {
-  policy_arn = "arn:aws:iam::aws:policy/AmazonEKSVPCResourceController"
-  role       = aws_iam_role.eks_node_group.name
-}
 
 # Create an EC2 Instance for EKS and other cluster configurations
 resource "aws_instance" "my_eks_instance" {
