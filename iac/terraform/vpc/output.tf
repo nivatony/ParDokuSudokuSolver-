@@ -15,5 +15,14 @@ output "ecr_repository_url" {
   value = aws_ecr_repository.sudoku_solver_app1.repository_url
 }
 
+output "aws_public_subnet" {
+  value = aws_subnet.public_subnet.*.id
+}
+
+output "vpc_id" {
+  value = aws_vpc.main.id
+}
+
+
 # Define other resources and configurations as needed..
 
