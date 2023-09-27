@@ -120,10 +120,7 @@ resource "aws_eks_cluster" "my_cluster" {
       aws_subnet.private_subnet_1.id,
       aws_subnet.private_subnet_2.id,
     ]
-    endpoint_public_access  = var.endpoint_public_access
-    endpoint_private_access = var.endpoint_private_access
-    public_access_cidrs     = var.public_access_cidrs
-  
+    
   }
 }
 
@@ -131,7 +128,7 @@ resource "aws_eks_cluster" "my_cluster" {
 
 resource "aws_security_group" "node_group_one" {
   name_prefix = "node_group_one"
-  vpc_id      = var.vpc_id
+  vpc_id                  = aws_vpc.main.id
 
   ingress {
     from_port = 80
