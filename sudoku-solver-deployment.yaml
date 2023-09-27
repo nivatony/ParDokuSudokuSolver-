@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: sudoku-solver-container
-          image: <your-account-id>.dkr.ecr.<your-region>.amazonaws.com/sudoku-solver-app:v1
+          image: 712699700534.dkr.ecr.eu-north-1.amazonaws.com/sudoku_solver_app1:v1
           ports:
             - containerPort: 80
 
