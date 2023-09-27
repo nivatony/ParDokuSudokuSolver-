@@ -63,29 +63,7 @@ jobs:
         run: terraform apply -var-file=./dev/terraform.tfvars -auto-approve -input=false
 
 
-      - name: Configure kubectl
-        run: |
-         mkdir -p $HOME/.kube
-         echo "${{ steps.get_kubeconfig.outputs.kubeconfig }}" > $HOME/.kube/config
-        env:
-          KUBECONFIG: $HOME/.kube/config
-
-
-      - name: Update Kubernetes Ingress (root)
-        run: kubectl apply -f sudoku-solver-ingress.yaml
- 
-      - name: Update Kubernetes Service (root)
-        run: kubectl apply -f sudoku-solver-service.yaml
-
-        
-      - name: Deploy to EKS (vpc)
-        run: kubectl apply -f sudoku-solver-deployment.yaml
-        
-
-      - name: Wait for rollout to complete (vpc)
-        run: kubectl rollout status deployment/sudoku-solver-deployment
-                
-
+     
       - name: Save kubeconfig (vpc)
         run: terraform output kubeconfig > kubeconfig_vpc.yml
         
