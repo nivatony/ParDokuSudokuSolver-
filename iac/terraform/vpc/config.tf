@@ -1,5 +1,4 @@
 
-
 resource "null_resource" "configure_kubectl" {
   # This triggers the resource whenever the EKS cluster is created or updated.
   triggers = {
