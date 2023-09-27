@@ -223,8 +223,6 @@ resource "aws_iam_role_policy_attachment" "niva-AmazonEC2ContainerRegistryReadOn
 }
 
 
-
-
   # Other cluster configurations...
   }
 
