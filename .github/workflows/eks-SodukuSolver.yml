@@ -61,14 +61,20 @@ jobs:
 
       - name: Terraform Apply
         run: terraform apply -var-file=./dev/terraform.tfvars -auto-approve -input=false
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
         
-
-
-      - name: Build Docker image
-        run: docker build -t sudoku-solver-app .
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
 
       - name: Retrieve ECR login credentials
         run: aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 712699700534.dkr.ecr.us-east-1.amazonaws.com
+
+      - name: Build Docker image
+        run: docker build -t sudoku-solver-app .
 
       - name: Tag Docker image
         run: docker tag sudoku-solver-app:latest 712699700534.dkr.ecr.us-east-1.amazonaws.com/sudoku-solver-app:latest
