@@ -16,11 +16,11 @@ output "ecr_repository_url" {
 }
 
 output "aws_public_subnet" {
-  value = aws_subnet.public_subnet.*.id
+  value = aws_subnet.public_subnet_.*.id
 }
 
 output "aws_private_subnet" {
-  value = aws_subnet.private_subnet.*.id
+  value = aws_subnet.private_subnet_.*.id
 }
 
 
