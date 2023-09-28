@@ -6,7 +6,7 @@ resource "aws_launch_template" "my_launch_template" {
   instance_type = "t2.micro"
   key_name = "ubuntu"
   
-  user_data = filebase64("${path.module}/Sudokusolver.py")
+  user_data = filebase64("./Sudokusolver.py")
 
   block_device_mappings {
     device_name = "/dev/sda1"
@@ -22,3 +22,20 @@ resource "aws_launch_template" "my_launch_template" {
     security_groups = [aws_security_group.my_sg.id]
   }
 }
+
+resource "aws_autoscaling_group" "my_asg" {
+  name                      = "my_asg"
+  max_size                  = 5
+  min_size                  = 2
+  health_check_type         = "ELB"    # optional
+  desired_capacity          = 2
+  target_group_arns = [aws_lb_target_group.my_tg.arn]
+
+  vpc_zone_identifier       = [ aws_subnet.public_1.id, aws_subnet.public_1.id]
+  
+  launch_template {
+    id      = aws_launch_template.my_launch_template.id
+    version = "$Latest"
+  }
+}
+
