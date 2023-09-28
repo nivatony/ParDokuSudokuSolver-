@@ -1,6 +1,6 @@
 cluster_name = "awesome_cluster"
 
-route_rt = "public_route"
+public_rt = "public_route"
 
 
 environment = "dev"
