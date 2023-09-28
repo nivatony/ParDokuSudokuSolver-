@@ -25,7 +25,7 @@ resource "aws_launch_template" "my_launch_template" {
       availability_zone = "eu-north-1"
   } 
 
-    ram_disk_id = "dev"
+    ram_disk_id = "ari-12345678"
 
     metadata_options {
        http_endpoint               = "enabled"
