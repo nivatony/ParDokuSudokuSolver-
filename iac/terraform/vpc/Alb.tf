@@ -1,5 +1,5 @@
 resource "aws_lb" "my_alb" {
-  name               = "${var.cluster_name}_alb"
+  alb_name               = "${var.cluster_name}_alb1"
   internal           = false
   load_balancer_type = "application"
   subnets            = [aws_subnet.public_subnet_1.id, aws_subnet.public_subnet_2.id]
@@ -10,7 +10,7 @@ resource "aws_lb" "my_alb" {
   enable_cross_zone_load_balancing = true
 
   tags = {
-    "Name"        = "${var.cluster_name}_alb"
+    "Name"        = "${var.cluster_name}_alb1"
     "ClusterName" = var.cluster_name
     "Environment" = var.environment
   }
