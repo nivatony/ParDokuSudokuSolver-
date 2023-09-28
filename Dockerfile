@@ -21,7 +21,7 @@ RUN apt-get update && \
 RUN apt-get install -y libzmq3-dev python3-pip
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 RUN pip3 install --upgrade pip
-RUN pip3 install -r requirements.txt
+RUN pip3 freeze > requirements.txt
 RUN cp *.pem /app/certs/
 
 RUN pip3 install --upgrade pip
