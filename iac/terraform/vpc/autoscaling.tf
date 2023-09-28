@@ -1,41 +1,77 @@
 resource "aws_launch_template" "my_launch_template" {
 
-  name = "my_launch_template"
+   name = "my_launch_template"
 
-  image_id = "ami-0989fb15ce71ba39e"
-  instance_type = "t2.micro"
+   image_id = "ami-0989fb15ce71ba39e"
+   instance_type = "t2.micro"
  
   
-  user_data = filebase64("${path.module}/Sudokusolver.py")
+   user_data = filebase64("${path.module}/Sudokusolver.py")
 
-  block_device_mappings {
-    device_name = "/dev/sda1"
+   block_device_mappings {
+     device_name = "/dev/sda1"
 
-    ebs {
-      volume_size = 8
-      volume_type = "gp2"
+     ebs {
+       volume_size = 20
+       volume_type = "gp2"
     }
   }
 
-  network_interfaces {
-    associate_public_ip_address = true
-    security_groups = [aws_security_group.node_group_one.id]
+    capacity_reservation_specification {
+      capacity_reservation_preference = "open"
   }
-}
 
-resource "aws_autoscaling_group" "my_asg" {
-  name                      = "my_asg"
-  max_size                  = 5
-  min_size                  = 2
-  health_check_type         = "ELB"    # optional
-  desired_capacity          = 2
-  target_group_arns = [aws_lb_target_group.my_tg.arn]
+    placement {
+      availability_zone = "eu-north-1"
+  } 
 
-  vpc_zone_identifier       = [aws_subnet.public_subnet_1.id, aws_subnet.public_subnet_1.id]
-  
-  launch_template {
-    id      = aws_launch_template.my_launch_template.id
-    version = "$Latest"
+    ram_disk_id = "dev"
+
+    metadata_options {
+       http_endpoint               = "enabled"
+       http_tokens                 = "required"
+       http_put_response_hop_limit = 1
+       instance_metadata_tags      = "enabled"
   }
-}
 
+     monitoring {
+       enabled = true
+  }
+
+
+     cpu_options {
+       core_count       = 4
+       threads_per_core = 2
+  }
+
+    credit_specification {
+      cpu_credits = "standard"
+  }
+
+    disable_api_stop        = true
+    disable_api_termination = true
+
+    ebs_optimized = true
+
+    network_interfaces {
+       associate_public_ip_address = true
+
+    }
+
+   elastic_inference_accelerator {
+     type = "eia1.medium"
+  }
+
+   vpc_security_group_ids = ["aws_security_group.my_sg.id"]
+
+   tag_specifications {
+     resource_type = "instance"
+
+     tags = {
+       Name = "test"
+    }
+  }
+
+
+
+}
