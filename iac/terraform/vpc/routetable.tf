@@ -7,6 +7,6 @@ resource "aws_route_table" "public_rt" {
   }
 
   tags = {
-    Name = var.public_rt
+    Name = public route
   }
 }
