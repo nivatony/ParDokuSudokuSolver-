@@ -28,7 +28,7 @@ RUN pip3 install --upgrade pip
 #RUN pip3 install -r requirements.txt
 RUN cp *.pem /app/certs/
 #RUN cp lib/rdsAdmin.py /usr/lib/python3.4
-RUN cp lib/rdsAdmin.py /usr/local/lib/python3.9
+#RUN cp lib/rdsAdmin.py /usr/local/lib/python3.9
 #RUN apt-get install -y apt-utils && apt-get install -y curl
 RUN apt-get -y install curl
  
