@@ -12,6 +12,8 @@ variable "public_rt" {
     cidr_block        = string
     gateway_id        = string
     vpc_id            = string
+    default           = route_table
+
 
 
   })
