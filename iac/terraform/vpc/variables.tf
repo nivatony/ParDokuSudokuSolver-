@@ -6,6 +6,17 @@ variable "environment" {
   type = string
 }
 
+
+variable "public_rt" {
+  type = object({
+    cidr_block        = string
+    gateway_id        = string
+    vpc_id            = string
+
+
+  })
+}
+
 variable "vpc_cidr_block" {
   type = string
 }
