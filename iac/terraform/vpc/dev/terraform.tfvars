@@ -1,5 +1,8 @@
 cluster_name = "awesome_cluster"
 
+route_table ="public_route"
+
+
 environment = "dev"
 
 vpc_cidr_block = "10.0.0.0/16"
