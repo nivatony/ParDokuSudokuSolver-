@@ -1,5 +1,5 @@
 resource "aws_lb" "my_alb" {
-  alb_name               = "${var.cluster_name}_alb1"
+  name               = "${var.cluster_name}_alb1"
   internal           = false
   load_balancer_type = "application"
   subnets            = [aws_subnet.public_subnet_1.id, aws_subnet.public_subnet_2.id]
