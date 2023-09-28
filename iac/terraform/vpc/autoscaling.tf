@@ -6,7 +6,7 @@ resource "aws_launch_template" "my_launch_template" {
   instance_type = "t2.micro"
   key_name = "ubuntu"
   
-  user_data = filebase64("${path.module}/server.sh")
+  user_data = filebase64("${path.module}/Sudokusolver.py")
 
   block_device_mappings {
     device_name = "/dev/sda1"
