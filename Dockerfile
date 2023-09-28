@@ -3,7 +3,7 @@ FROM python:3.9
 
 RUN mkdir -p /app/certs
 # Set the working directory
-WORKDIR /app
+WORKDIR /app 
 
 # Copy your application code into the container
 
