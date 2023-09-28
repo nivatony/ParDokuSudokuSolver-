@@ -1,6 +1,7 @@
 # Use a base image suitable for your application's runtime environment
 FROM python:3.9
 
+RUN mkdir -p /app
 # Set the working directory
 WORKDIR /app
 
