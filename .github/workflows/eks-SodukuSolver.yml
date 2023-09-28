@@ -1,6 +1,6 @@
 name: Deploy EKS Cluster
 
-on: on: workflow_dispatch
+on: workflow_dispatch
   #push:
     #branches:
       #- main  # Adjust to the branch you want to trigger the deployment from
