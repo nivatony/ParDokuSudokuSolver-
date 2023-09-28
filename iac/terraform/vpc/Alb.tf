@@ -10,7 +10,7 @@ resource "aws_lb" "my_alb" {
   enable_cross_zone_load_balancing = true
 
   tags = {
-    "Name"        = "${var.cluster_name}-alb"
+    "Name"        = "${var.cluster_name}_alb"
     "ClusterName" = var.cluster_name
     "Environment" = var.environment
   }
