@@ -38,6 +38,15 @@ variable "private_subnet_2_details" {
   })
 }
 
+
+variable "aws_lb.my_alb" {
+  type = object({
+    availability_zone = string
+    cidr_block        = string
+    })
+}
+
+
 variable "node_group_name" {}
 
 variable "scaling_desired_size" {}
