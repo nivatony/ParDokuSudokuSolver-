@@ -24,7 +24,7 @@ private_subnet_2_details = {
   cidr_block        = "10.0.4.0/24"
 }
 
-alb_name = awesome_cluster_alb1
+alb_name = "awesome_cluster_alb1"
 key_pair = "MyKeyPair"
 instance_types = "t2.micro"
 
