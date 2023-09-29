@@ -39,6 +39,11 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_REGION: us-north-1
 
+
+      - name: Update kube config
+        run: aws eks update-kubeconfig --name awesome_cluster
+
+
       - name: Set up Terraform (vpc)
         uses: hashicorp/setup-terraform@v1
         with:
