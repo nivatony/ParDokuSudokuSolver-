@@ -8,7 +8,7 @@ on:  workflow_dispatch
       #- "iac/terraform/vpc/*"
      # - "iac/terraform/vpc/dev/**"
       #- "iac/terraform/Eks/*"
-      
+     
 env:
   # TF_LOG: INFO
   AWS_ACCOUNT_NUMBER: 712699700534
