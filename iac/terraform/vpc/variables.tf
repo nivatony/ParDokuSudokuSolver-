@@ -6,6 +6,9 @@ variable "environment" {
   type = string
 }
 
+variable "kubeconfig" {
+}
+
 
 #variable "kubeconfig_content" {
  # description = "Content for the kubeconfig file"
