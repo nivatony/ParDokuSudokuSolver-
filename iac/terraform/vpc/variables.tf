@@ -6,8 +6,8 @@ variable "environment" {
   type = string
 }
 
-variable "kubeconfig" {
-}
+#variable "kubeconfig" {
+#}
 
 
 #variable "kubeconfig_content" {
