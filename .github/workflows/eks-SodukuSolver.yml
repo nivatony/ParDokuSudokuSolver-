@@ -52,7 +52,7 @@ jobs:
       # Add the Terraform plan, Terraform Plan Status, and Terraform Apply steps here
       - name: Terraform plan
         id: plan
-        run: terraform plan -var-file=./terraform/vpc/iam.tf -no-color -input=false
+        run: terraform plan -file=./iac/terraform/vpc/iam.tf -no-color -input=false
         continue-on-error: true
 
       - name: Terraform Plan Status
