@@ -1,13 +1,13 @@
 name: Deploy EKS Cluster
 
-on:  workflow_dispatch
- # push:
-   # branches:
-      #- main  # Adjust to the branch you want to trigger the deployment from
-    # paths:
-      #- "iac/terraform/vpc/*"
-     # - "iac/terraform/vpc/dev/**"
-      #- "iac/terraform/Eks/*"
+on:  
+  push:
+    branches:
+      - main  # Adjust to the branch you want to trigger the deployment from
+    paths:
+      - "iac/terraform/vpc/*"
+      - "iac/terraform/vpc/dev/**"
+      - "iac/terraform/Eks/*"
      
 env:
   # TF_LOG: INFO
@@ -52,7 +52,9 @@ jobs:
       # Add the Terraform plan, Terraform Plan Status, and Terraform Apply steps here
       - name: Terraform plan
         id: plan
-        run: terraform plan -target=module.allow_eks_access_iam_policy -var-file=./dev/terraform.tfvars -no-color -input=false
+        run: terraform plan -var-file=./dev/terraform.tfvars -no-color -input=false
+
+        #run: terraform plan -target=module.allow_eks_access_iam_policy -var-file=./dev/terraform.tfvars -no-color -input=false
         continue-on-error: true
 
       - name: Terraform Plan Status
@@ -60,4 +62,5 @@ jobs:
         run: exit 1
 
       - name: Terraform Apply
-        run: terraform apply -target=module.allow_eks_access_iam_policy -var-file=./dev/terraform.tfvars -auto-approve -input=false
+        run: terraform apply -var-file=./dev/terraform.tfvars -auto-approve -input=false
+        #run: terraform apply -target=module.allow_eks_access_iam_policy -var-file=./dev/terraform.tfvars -auto-approve -input=false
