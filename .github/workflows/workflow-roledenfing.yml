@@ -1,4 +1,4 @@
-name: Deploy to EKS and ECR
+name: Deploy RBC to EKS 
 
 on: 
   push:
