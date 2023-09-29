@@ -1,0 +1,14 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: developers-poc
+  namespace: poc
+subjects:
+  - kind: Group
+    name: developers
+    namespace: poc
+    apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: Role
+  name: developers-poc
+  apiGroup: rbac.authorization.k8s.io
