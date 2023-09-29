@@ -39,12 +39,12 @@ jobs:
 
 
       - name: Update kube config
-        run: aws eks update-kubeconfig --name dev
+        run: aws eks update-kubeconfig --name awesome_cluster
         
 
       - name: Deploy to EKS
         run: |
-          kubectl apply -f sudoku-solver-deployment.yaml -n dev
-          kubectl apply -f sudoku-solver-service.yaml -n dev
-          kubectl apply -f sudoku-solver-ingress.yaml -n dev
+          kubectl apply -f sudoku-solver-deployment.yaml -n awesome_cluster
+          kubectl apply -f sudoku-solver-service.yaml -n awesome_cluster
+          kubectl apply -f sudoku-solver-ingress.yaml -n awesome_cluster
           kubeconfig: ${{ secrets.KUBE_CONFIG }}
