@@ -200,9 +200,10 @@ resource "kubernetes_cluster_role_binding" "worker_nodes_read_pods" {
 
 
 resource "local_file" "kubeconfig" {
-  content  = var.kubeconfig_content
-  filename = var.kubeconfig_filename
+  
+  filename = "./.kube_config.yaml"
 }
+
 
 resource "aws_iam_role" "niva1" {
   name = "awsome_cluster"
