@@ -123,6 +123,12 @@ resource "aws_eks_cluster" "my_cluster" {
     ]
     
   }
+
+resource "local_file" "kubeconfig" {
+  content  = aws_eks_cluster.my_cluster.kubeconfig[*].content
+  filename = "./.kube_config.yaml"
+}
+
 }
 
 resource "aws_lb_target_group" "my_tg" {
@@ -197,12 +203,6 @@ resource "kubernetes_cluster_role_binding" "worker_nodes_read_pods" {
   }
 }
 
-
-
-resource "local_file" "kubeconfig" {
-  
-  filename = "./.kube_config.yaml"
-}
 
 
 resource "aws_iam_role" "niva1" {
