@@ -47,4 +47,4 @@ jobs:
           kubectl apply -f sudoku-solver-deployment.yaml 
           kubectl apply -f sudoku-solver-service.yaml 
           kubectl apply -f sudoku-solver-ingress.yaml 
-          kubeconfig: ${{ secrets.KUBE_CONFIG }}
+         
