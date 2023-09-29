@@ -52,7 +52,7 @@ jobs:
       # Add the Terraform plan, Terraform Plan Status, and Terraform Apply steps here
       - name: Terraform plan
         id: plan
-        run: terraform plan -file=./iac/terraform/vpc/iam.tf -no-color -input=false
+        run: terraform plan -target=./iac/terraform/vpc/iam.tf -no-color -input=false
         continue-on-error: true
 
       - name: Terraform Plan Status
@@ -60,4 +60,4 @@ jobs:
         run: exit 1
 
       - name: Terraform Apply
-        run: terraform apply -file=./dev/terraform.tfvars -auto-approve -input=false
+        run: terraform apply -target= ./iac/terraform/vpc/iam.tf -auto-approve -input=false
