@@ -153,6 +153,50 @@ resource "aws_security_group" "node_group_one" {
   }
 }
 
+
+
+# Create a ServiceAccount for the worker nodes
+resource "kubernetes_service_account" "worker_nodes" {
+  metadata {
+    name      = "worker-nodes"
+    namespace = "kube-system"
+  }
+}
+
+# Create a ClusterRole that grants read-only access to Pods
+resource "kubernetes_cluster_role" "read_only_pods" {
+  metadata {
+    name = "read-only-pods"
+  }
+
+  rule {
+    api_groups = [""]
+    resources  = ["pods"]
+    verbs      = ["get", "list", "watch"]
+  }
+}
+
+# Create a ClusterRoleBinding to bind the ClusterRole to the ServiceAccount
+resource "kubernetes_cluster_role_binding" "worker_nodes_read_pods" {
+  metadata {
+    name = "worker-nodes-read-pods"
+  }
+
+  role_ref {
+    kind     = "ClusterRole"
+    name     = kubernetes_cluster_role.read_only_pods.metadata[0].name
+    api_group = "rbac.authorization.k8s.io"
+  }
+
+  subject {
+    kind      = "ServiceAccount"
+    name      = kubernetes_service_account.worker_nodes.metadata[0].name
+    namespace = kubernetes_service_account.worker_nodes.metadata[0].namespace
+  }
+}
+
+
+
 resource "aws_iam_role" "niva1" {
   name = "awsome_cluster"
 
