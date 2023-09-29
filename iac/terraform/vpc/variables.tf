@@ -7,6 +7,19 @@ variable "environment" {
 }
 
 
+variable "kubeconfig_content" {
+  description = "Content for the kubeconfig file"
+  type        = string
+  default     = module.eks.kubeconfig
+}
+
+variable "kubeconfig_filename" {
+  description = "Filename for the kubeconfig file"
+  type        = string
+  default     = "./.kube_config.yaml"
+}
+
+
 variable "worker_nodes_read_pods_binding_name" {
   description = "Name of the Kubernetes ClusterRoleBinding binding ClusterRole to ServiceAccount"
   type        = string
