@@ -1,6 +1,6 @@
 name: Deploy to EKS and ECR
 
-on:
+on: workflow_dispatch
   #push:
     #branches:
      # - main  # Change to your main branch name
