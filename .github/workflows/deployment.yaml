@@ -33,8 +33,7 @@ jobs:
 
 
       - name: Setup EKS Kubectl
-        
-        with:
+        run: |
            uses: nivatony/ParDokuSudokuSolver-/setup-eks-kubectl@v1
 
            cluster: awesome_cluster # name of your EKS cluster
