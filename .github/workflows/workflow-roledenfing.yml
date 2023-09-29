@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - main  # Change to your main branch name
+    paths:
+      - "iac/terraform/Eks/*"
+      
 env:
   # TF_LOG: INFO
   AWS_ACCOUNT_NUMBER: 712699700534
@@ -11,7 +14,7 @@ env:
 defaults:
   run:
     shell: bash
-    working-directory: ./iac/terraform/Eks
+    working-directory: ./
 permissions:
   contents: read
 
