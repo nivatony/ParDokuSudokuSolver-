@@ -4,10 +4,10 @@ on:  workflow_dispatch
  # push:
    # branches:
       #- main  # Adjust to the branch you want to trigger the deployment from
-    paths:
-      - "iac/terraform/vpc/*"
-      - "iac/terraform/vpc/dev/**"
-      - "iac/terraform/Eks/*"
+    # paths:
+      #- "iac/terraform/vpc/*"
+     # - "iac/terraform/vpc/dev/**"
+      #- "iac/terraform/Eks/*"
       
 env:
   # TF_LOG: INFO
