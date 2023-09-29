@@ -32,10 +32,14 @@ jobs:
           aws-region: eu-north-1  # Change to your AWS region
 
 
-      - name: Configure kubectl
-        uses: kube-actions/configure-kubectl@v1
+      - name: Setup EKS Kubectl
+        uses: zachguo/setup-eks-kubectl@v1
         with:
-          kubeconfig: ${{ secrets.KUBE_CONFIG }}
+            cluster: awesome_cluster # name of your EKS cluster
+            region: eu-north-1  # region of your EKS cluster
+            namespace: dev # optional namespace context, default value is 'default'
+       
+            kubeconfig: ${{ secrets.KUBE_CONFIG }}
 
       - name: Deploy to EKS
         run: |
