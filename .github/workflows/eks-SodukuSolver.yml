@@ -1,9 +1,9 @@
 name: Deploy EKS Cluster
 
-on: workflow_dispatch
-  #push:
-    #branches:
-      #- main  # Adjust to the branch you want to trigger the deployment from
+on: 
+  push:
+    branches:
+      - main  # Adjust to the branch you want to trigger the deployment from
     paths:
       - "iac/terraform/vpc/*"
       - "iac/terraform/vpc/dev/**"
@@ -52,7 +52,7 @@ jobs:
       # Add the Terraform plan, Terraform Plan Status, and Terraform Apply steps here
       - name: Terraform plan
         id: plan
-        run: terraform plan -var-file=./dev/terraform.tfvars -no-color -input=false
+        run: terraform plan -var-file=./terraform/vpc/iam.tf -no-color -input=false
         continue-on-error: true
 
       - name: Terraform Plan Status
