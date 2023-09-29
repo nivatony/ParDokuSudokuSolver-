@@ -2,7 +2,7 @@ provider "aws" {
  region = "eu-north-1"  # Change to your desired AWS region....
 }
 #
-#
+#..
 # Define your VPC and Subnets
 resource "aws_vpc" "main" {
   cidr_block           = var.vpc_cidr_block
