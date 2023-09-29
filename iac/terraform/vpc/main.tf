@@ -158,15 +158,16 @@ resource "aws_security_group" "node_group_one" {
 # Create a ServiceAccount for the worker nodes
 resource "kubernetes_service_account" "worker_nodes" {
   metadata {
-    name      = "worker-nodes"
-    namespace = "kube-system"
+    name      = var.worker_nodes_sa_name
+    namespace = var.worker_nodes_sa_namespace
   }
 }
+
 
 # Create a ClusterRole that grants read-only access to Pods
 resource "kubernetes_cluster_role" "read_only_pods" {
   metadata {
-    name = "read-only-pods"
+    name = var.read_only_pods_role_name
   }
 
   rule {
@@ -176,10 +177,11 @@ resource "kubernetes_cluster_role" "read_only_pods" {
   }
 }
 
+
 # Create a ClusterRoleBinding to bind the ClusterRole to the ServiceAccount
 resource "kubernetes_cluster_role_binding" "worker_nodes_read_pods" {
   metadata {
-    name = "worker-nodes-read-pods"
+    name = var.worker_nodes_read_pods_binding_name
   }
 
   role_ref {
