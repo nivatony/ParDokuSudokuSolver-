@@ -126,10 +126,10 @@ resource "aws_eks_cluster" "my_cluster" {
 
 }
 
-resource "local_file" "kubeconfig" {
-  content  = file("kube_config.yaml")
-  filename = ".kube_config.yaml"
-}
+#resource "local_file" "kubeconfig" {
+  #content  = file("kube_config.yaml")
+  #filename = ".kube_config.yaml"
+#}
 
 
 resource "aws_lb_target_group" "my_tg" {
