@@ -7,6 +7,33 @@ variable "environment" {
 }
 
 
+variable "worker_nodes_read_pods_binding_name" {
+  description = "Name of the Kubernetes ClusterRoleBinding binding ClusterRole to ServiceAccount"
+  type        = string
+  default     = "worker-nodes-read-pods"
+}
+
+variable "read_only_pods_role_name" {
+  description = "Name of the Kubernetes ClusterRole granting read-only access to Pods"
+  type        = string
+  default     = "read-only-pods"
+}
+
+
+
+variable "worker_nodes_sa_name" {
+  description = "Name of the Kubernetes ServiceAccount for worker nodes"
+  type        = string
+  default     = "worker-nodes"
+}
+
+variable "worker_nodes_sa_namespace" {
+  description = "Namespace for the Kubernetes ServiceAccount for worker nodes"
+  type        = string
+  default     = "kube-system"
+}
+
+
 variable "vpc_cidr_block" {
   type = string
 }
