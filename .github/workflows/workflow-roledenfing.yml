@@ -1,13 +1,13 @@
-name: Deploy EKS Cluster
+#name: Deploy EKS Cluster
 
-on:  
-   push:
-     branches:
-       - main  # Adjust to the branch you want to trigger the deployment from
-     paths:
+#on:  
+   #push:
+     #branches:
+       #- main  # Adjust to the branch you want to trigger the deployment from
+     #paths:
     
-       - "iac/terraform/Eks/*"
-       - "iac/terraform/Eks/**"
+       #- "iac/terraform/Eks/*"
+      # - "iac/terraform/Eks/**"
 
       
 env:
