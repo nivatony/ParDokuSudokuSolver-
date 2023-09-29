@@ -11,7 +11,7 @@ env:
 defaults:
   run:
     shell: bash
-    working-directory: ./
+    working-directory: ./iac/terraform/Eks
 permissions:
   contents: read
 
