@@ -6,7 +6,7 @@ on:
        - main  # Adjust to the branch you want to trigger the deployment from
      paths:
     
-       - "iac/terraform/Eks/*"
+       - "iac/terraform/Eks/*" 
       
 env:
   # TF_LOG: INFO
