@@ -196,7 +196,6 @@ resource "kubernetes_cluster_role_binding" "worker_nodes_read_pods" {
 }
 
 
-
 resource "aws_iam_role" "niva1" {
   name = "awsome_cluster"
 
