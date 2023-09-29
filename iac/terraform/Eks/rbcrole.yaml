@@ -5,7 +5,7 @@ metadata:
   name: developers-app
 rules:
   - apiGroups:
-    - ""
+    - "" 
     resources:
     - pods
     - pods/log
