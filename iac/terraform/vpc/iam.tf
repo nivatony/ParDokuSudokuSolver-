@@ -14,7 +14,6 @@ module "allow_eks_access_iam_policy" {
           "eks:AccessKubernetesApi",
            "eks:List*",
 
-
         ]
         Effect   = "Allow"
         Resource = "*"
