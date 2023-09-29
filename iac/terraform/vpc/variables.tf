@@ -10,13 +10,6 @@ variable "environment" {
 variable "kubeconfig_content" {
   description = "Content for the kubeconfig file"
   type        = string
-  default     = module.eks.kubeconfig
-}
-
-variable "kubeconfig_filename" {
-  description = "Filename for the kubeconfig file"
-  type        = string
-  default     = "./.kube_config.yaml"
 }
 
 
