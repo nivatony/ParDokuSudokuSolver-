@@ -122,7 +122,7 @@ resource "aws_eks_cluster" "my_cluster" {
       aws_subnet.private_subnet_2.id,
     ]
     
-  }
+  } 
 
 }
 
