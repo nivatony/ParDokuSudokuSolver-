@@ -127,7 +127,10 @@ resource "aws_eks_cluster" "my_cluster" {
 }
 
 resource "local_file" "kubeconfig" {
-  content  = aws_eks_cluster.my_cluster.kubeconfig[*].content
+  content  = file("kube_config.yaml")
+  filename = "./.kube_config.yaml"
+}
+
   filename = "./.kube_config.yaml"
 }
 
