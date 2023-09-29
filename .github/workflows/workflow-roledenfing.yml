@@ -3,9 +3,9 @@ name: Deploy to EKS and ECR
 on: 
   push:
     branches:
-      - main  # Change to your main branch name
+       - main  # Change to your main branch name
     paths:
-      - "iac/terraform/Eks/*"
+       - "iac/terraform/Eks/*"
       
 env:
   # TF_LOG: INFO
