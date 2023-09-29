@@ -1,11 +1,12 @@
-name: Deploy RBC to EKS 
+name: Deploy EKS Cluster
 
-on: 
-  push:
-    branches:
-      - main  # Change to your main branch name
-    paths:
-      - "iac/terraform/Eks/*"
+on:  
+   push:
+     branches:
+       - main  # Adjust to the branch you want to trigger the deployment from
+     paths:
+    
+       - "iac/terraform/Eks/*"
       
 env:
   # TF_LOG: INFO
