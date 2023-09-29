@@ -1,9 +1,9 @@
 name: Deploy EKS Cluster
 
-on: 
-  push:
-    branches:
-      - main  # Adjust to the branch you want to trigger the deployment from
+on:  workflow_dispatch
+ # push:
+   # branches:
+      #- main  # Adjust to the branch you want to trigger the deployment from
     paths:
       - "iac/terraform/vpc/*"
       - "iac/terraform/vpc/dev/**"
