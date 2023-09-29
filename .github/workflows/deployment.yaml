@@ -33,17 +33,12 @@ jobs:
 
 
       - name: Setup EKS Kubectl
-        run: |
-           uses: nivatony/ParDokuSudokuSolver-/setup-eks-kubectl@v1
-
-           cluster: awesome_cluster # name of your EKS cluster
-           region: eu-north-1  # region of your EKS cluster
-           eks-arn-role: arn:aws:iam::712699700534:role/github-actions-role
-
-           namespace: dev # optional namespace context, default value is 'default'
-       
-           kubeconfig: ${{ secrets.KUBE_CONFIG }}
+      - uses: azure/setup-kubectl@v3
+        with:
+          version: default # default is latest stable
+        id: install
 
       - name: Deploy to EKS
         run: |
           kubectl apply -f deployment.yaml -n your-namespace
+          kubeconfig: ${{ secrets.KUBE_CONFIG }}
