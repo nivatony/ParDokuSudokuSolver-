@@ -10,7 +10,6 @@ read_only_pods_role_name = "my-read-only-pods"
 # Cluster Role Binding Variables
 worker_nodes_read_pods_binding_name = "my-worker-nodes-read-pods"
 
-
 #kubeconfig = ".kube_config.yaml"
 
 environment = "dev"
