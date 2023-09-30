@@ -101,7 +101,7 @@ resource "aws_eks_node_group" "my-node-group" {
   }
 
 
-
+}
 
 
 # Create EKS Cluster (integrated with your VPC and subnets)
