@@ -5,7 +5,7 @@ terraform {
       version = "~> 5"
     } 
   } 
-}
+} 
  
 
 provider "kubernetes" {
