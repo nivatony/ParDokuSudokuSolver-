@@ -62,7 +62,7 @@ resource "aws_eks_node_group" "my-node-group" {
   cluster_name = var.cluster_name
 
   # Name of the EKS Node Group.
-  node_group_name = "my-node-group"
+   name = "var.node
 
   # Amazon Resource Name (ARN) of the IAM Role that provides permissions for the EKS Node Group.
   node_role_arn = aws_iam_role.my-node-group.arn
