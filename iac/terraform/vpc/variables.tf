@@ -13,7 +13,7 @@ variable "environment" {
 #variable "kubeconfig_content" {
  # description = "Content for the kubeconfig file"
  # type        = string
-#}
+#} 
 
 
 variable "worker_nodes_read_pods_binding_name" {
