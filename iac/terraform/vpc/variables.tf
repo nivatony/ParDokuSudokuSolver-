@@ -46,7 +46,7 @@ variable "read_only_pods_role_name" {
   default     = "read-only-pods"
 }
 
-variable "my-node-group"{
+variable "node"{
 type = string
 
 
