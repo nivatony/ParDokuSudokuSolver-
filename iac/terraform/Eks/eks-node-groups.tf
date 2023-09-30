@@ -2,9 +2,9 @@
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role
 
 # Create IAM role for EKS Node Group
-resource "aws_iam_role" "nodes_general" {
+resource "aws_iam_role" "my-node-group" {
   # The name of the role
-  name = "eks-node-group-general"
+  name = "eks-node-group-general-role"
 
   # The policy that grants an entity permission to assume the role.
   assume_role_policy = <<POLICY
@@ -41,7 +41,7 @@ resource "aws_iam_role_policy_attachment" "amazon_eks_cni_policy_general" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"
 
   # The role the policy should be applied to
-  role = aws_iam_role.nodes_general.name
+  role = aws_iam_role.my-node-group.name
 }
 
 resource "aws_iam_role_policy_attachment" "amazon_ec2_container_registry_read_only" {
@@ -50,37 +50,37 @@ resource "aws_iam_role_policy_attachment" "amazon_ec2_container_registry_read_on
   policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
 
   # The role the policy should be applied to
-  role = aws_iam_role.nodes_general.name
+  role = aws_iam_role.my-node-group.name
 }
 
 # Resource: aws_eks_node_group
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/eks_node_group
 
-resource "aws_eks_node_group" "nodes_general" {
+resource "aws_eks_node_group" "my-node-group" {
   # Name of the EKS Cluster.
-  cluster_name = aws_eks_cluster.var.cluster_name
+  cluster_name = var.cluster_name
 
   # Name of the EKS Node Group.
-  node_group_name = "nodes-general"
+  node_group_name = "my-node-group"
 
   # Amazon Resource Name (ARN) of the IAM Role that provides permissions for the EKS Node Group.
-  node_role_arn = aws_iam_role.nodes_general.arn
+  node_role_arn = aws_iam_role.my-node-group.arn
 
   # Identifiers of EC2 Subnets to associate with the EKS Node Group. 
   # These subnets must have the following resource tag: kubernetes.io/cluster/CLUSTER_NAME 
   # (where CLUSTER_NAME is replaced with the name of the EKS Cluster).
   subnet_ids = [
-    aws_subnet.private_1.id,
-    aws_subnet.private_2.id
+    aws_private_subnet._1.id,
+    aws_private_subnet._2.id
   ]
 
   # Configuration block with scaling settings
   scaling_config {
     # Desired number of worker nodes.
-    desired_size = 2
+    desired_size = 1
 
     # Maximum number of worker nodes.
-    max_size = 3
+    max_size = 1
 
     # Minimum number of worker nodes.
     min_size = 1
@@ -104,7 +104,7 @@ resource "aws_eks_node_group" "nodes_general" {
   instance_types = ["t3.small"]
 
   labels = {
-    role = "nodes-general"
+    role = "my-node-group"
   }
 
   # Kubernetes version
