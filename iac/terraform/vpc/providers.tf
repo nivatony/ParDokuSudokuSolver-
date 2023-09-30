@@ -7,9 +7,9 @@ terraform {
   } 
 }
 
-provider "kubernetes" {
+#provider "kubernetes" {
             
-  config_path    = "ParDokuSudokuSolver-/.kube/config" # Set to the correct path of your kubeconfig file
+ # config_path    = "ParDokuSudokuSolver-/.kube/config" # Set to the correct path of your kubeconfig file
 
-}
+#}
 
