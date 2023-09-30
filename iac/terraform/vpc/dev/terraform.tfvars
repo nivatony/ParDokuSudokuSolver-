@@ -1,5 +1,11 @@
 cluster_name = "awesome_cluster"
 
+desired_size = 1
+max_size     = 1
+min_size     = 1
+
+
+
 # Service Account Variables
 #worker_nodes_sa_name = "my-worker-nodes"
 #worker_nodes_sa_namespace = "kube-system"
