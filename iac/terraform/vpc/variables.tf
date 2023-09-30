@@ -2,6 +2,12 @@ variable "cluster_name" {
   type = string
 }
 
+variable "environment" {
+  type = string
+}
+
+
+
 variable "desired_size" {
   type    = number
   default = 1
