@@ -150,17 +150,6 @@ resource "aws_security_group" "node_group_one" {
 
 
 
-# Create a ServiceAccount for the worker nodes
-resource "kubernetes_service_account" "worker_nodes" {
-  metadata {
-    name      = var.worker_nodes_sa_name
-    namespace = var.worker_nodes_sa_namespace
-  }
-}
-
-
-
-
 
 resource "aws_iam_role" "niva1" {
   name = "awsome_cluster"
