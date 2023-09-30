@@ -89,7 +89,7 @@ data "aws_availability_zones" "available" {
 
 
 resource "aws_eks_node_group" "my-node-group" {
-  cluster_name    = aws_eks_cluster.var.cluster_name
+  cluster_name    = var.cluster_name
   node_group_name = "my-node-group"
   #node_role_arn   = arn:aws:iam::712699700534:role/github-actions-role
   subnet_ids      = [aws_subnet.private_subnet_1.id, aws_subnet.private_subnet_2.id]
