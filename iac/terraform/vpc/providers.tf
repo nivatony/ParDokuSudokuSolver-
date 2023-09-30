@@ -6,7 +6,7 @@ terraform {
     } 
   } 
 }
-
+ 
 
 provider "kubernetes" {
   host = data.aws_eks_cluster.my_cluster.endpoint
