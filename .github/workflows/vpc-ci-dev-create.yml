@@ -1,10 +1,10 @@
 name: vpc-ci-dev-create
-on:
-  push:
-    branches: workflow_dispatch
-    paths:
-      - "iac/terraform/vpc/*"
-      - "iac/terraform/vpc/dev/**"
+#on:
+  #push:
+    #branches: workflow_dispatch
+    #paths:
+     # - "iac/terraform/vpc/*"
+      #- "iac/terraform/vpc/dev/**"
 env:
   # TF_LOG: INFO
   AWS_ACCOUNT_NUMBER: 712699700534
