@@ -9,8 +9,8 @@ terraform {
 
 provider "kubernetes" {
             
-  config_path    =[ "./config"  # Set to the correct path of your kubeconfig file
-]
+  config_path    = "./config"  # Set to the correct path of your kubeconfig file
+
 
 }
 
