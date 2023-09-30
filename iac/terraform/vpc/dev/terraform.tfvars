@@ -1,8 +1,8 @@
 cluster_name = "awesome_cluster"
 
 # Service Account Variables
-worker_nodes_sa_name = "my-worker-nodes"
-worker_nodes_sa_namespace = "kube-system"
+#worker_nodes_sa_name = "my-worker-nodes"
+#worker_nodes_sa_namespace = "kube-system"
 
 # Cluster Role Variables
 read_only_pods_role_name = "my-read-only-pods"
