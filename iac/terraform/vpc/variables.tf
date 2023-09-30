@@ -46,6 +46,11 @@ variable "read_only_pods_role_name" {
   default     = "read-only-pods"
 }
 
+variable "my-node-group"{
+type = string
+
+
+}
 
 
 variable "worker_nodes_sa_name" {
