@@ -88,23 +88,17 @@ data "aws_availability_zones" "available" {
 
 
 
-# Module for cluster autoscaler IAM role for Service Accounts in EKS
-#module "cluster_autoscaler_irsa_role" {
-  #source  = "terraform-aws-modules/iam/aws//modules/iam-role-for-service-accounts-eks"
-  #version = "5.3.1"
+resource "aws_eks_node_group" "my-node-group" {
+  cluster_name    = aws_eks_cluster.var.cluster_name
+  node_group_name = "my-node-group"
+  #node_role_arn   = arn:aws:iam::712699700534:role/github-actions-role
+  subnet_ids      = aws_private_subnet_1.[*].id
 
-  #role_name                        = "cluster-autoscaler"
-  ##attach_cluster_autoscaler_policy = true
-  #cluster_autoscaler_cluster_ids   = [module.var.cluster_name_id]
-
-  #oidc_providers = {
-   # ex = {
-      #namespace_service_accounts = ["kube-system:cluster-autoscaler"]
-     # provider_arn               = var.cluster_name.oidc_provider_arn
-   #   namespace_service_accounts = ["kube-system:cluster-autoscaler"]
-   # }
-  #}
-#}
+  scaling_config {
+    desired_size = 1
+    max_size     = 1
+    min_size     = 1
+  }
 
 
 
@@ -115,6 +109,8 @@ resource "aws_eks_cluster" "my_cluster" {
   name     = var.cluster_name
   role_arn = "arn:aws:iam::712699700534:role/github-actions-role"
   vpc_config {
+
+    endpoint_point_public_access= true
     subnet_ids = [
       aws_subnet.public_subnet_1.id,
       aws_subnet.public_subnet_2.id,
@@ -123,7 +119,7 @@ resource "aws_eks_cluster" "my_cluster" {
     ]
     
   } 
-
+   
 }
 
 # Data block to fetch information about the EKS cluster
@@ -176,38 +172,6 @@ resource "kubernetes_service_account" "worker_nodes" {
 }
 
 
-# Create a ClusterRole that grants read-only access to Pods
-resource "kubernetes_cluster_role" "read_only_pods" {
-  metadata {
-    name = var.read_only_pods_role_name
-  }
-
-  rule {
-    api_groups = [""]
-    resources  = ["pods"]
-    verbs      = ["get", "list", "watch"]
-  }
-}
-
-
-# Create a ClusterRoleBinding to bind the ClusterRole to the ServiceAccount
-resource "kubernetes_cluster_role_binding" "worker_nodes_read_pods" {
-  metadata {
-    name = var.worker_nodes_read_pods_binding_name
-  }
-
-  role_ref {
-    kind     = "ClusterRole"
-    name     = kubernetes_cluster_role.read_only_pods.metadata[0].name
-    api_group = "rbac.authorization.k8s.io"
-  }
-
-  subject {
-    kind      = "ServiceAccount"
-    name      = kubernetes_service_account.worker_nodes.metadata[0].name
-    namespace = kubernetes_service_account.worker_nodes.metadata[0].namespace
-  }
-}
 
 
 
