@@ -13,7 +13,7 @@ resource "aws_vpc" "main" {
     "Name"        = "${var.cluster_name}-${var.environment}-vpc"
     "ClusterName" = var.cluster_name
     "Environment" = var.environment
-  }
+  } 
 }
 
 # Declare your subnets
