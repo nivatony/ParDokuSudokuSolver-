@@ -99,7 +99,7 @@ resource "aws_eks_node_group" "my-node-group" {
     max_size     = 1
     min_size     = 1
   }
-
+ 
 
 }
 
