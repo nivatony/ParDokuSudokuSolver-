@@ -48,7 +48,7 @@ instance_types = "t3.small"
 
 
 
-name= "my-node-group"
+node= "my-node-group"
 eks_node_group_role_name = "node_group_role_niva"
 eks_worker_node_policy_arn = "worker_node_policy_arn_niva"
 eks_cni_policy_arn = "cni_policy_arn_niva"
