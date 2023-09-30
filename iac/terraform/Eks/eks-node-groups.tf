@@ -59,10 +59,10 @@ resource "aws_iam_role_policy_attachment" "amazon_ec2_container_registry_read_on
 
 resource "aws_eks_node_group" "my-node-group" {
   # Name of the EKS Cluster.
-  cluster_name = var.cluster_name
+   cluster_name = var.cluster_name
 
   # Name of the EKS Node Group.
-   name = "var.node
+   name = var.node
 
   # Amazon Resource Name (ARN) of the IAM Role that provides permissions for the EKS Node Group.
   node_role_arn = aws_iam_role.my-node-group.arn
