@@ -57,7 +57,7 @@ jobs:
       # Add the Terraform plan, Terraform Plan Status, and Terraform Apply steps here
       - name: Terraform plan
         id: plan
-        run: terraform plan   -no-color -input=false
+        run: terraform plan -var-file=./dev/terraform.tfvars   -no-color -input=false
 
         #run: terraform plan -target=module.allow_eks_access_iam_policy -var-file=./dev/terraform.tfvars -no-color -input=false
         #continue-on-error: true
@@ -68,4 +68,4 @@ jobs:
 
       - name: Terraform Apply
         #run: terraform apply -var-file=./dev/terraform.tfvars -auto-approve -input=false
-        run: terraform apply   -auto-approve -input=false
+        run: terraform apply -var-file=./dev/terraform.tfvars  -auto-approve -input=false
