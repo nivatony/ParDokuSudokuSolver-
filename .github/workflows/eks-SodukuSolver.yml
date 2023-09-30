@@ -68,4 +68,4 @@ jobs:
 
       - name: Terraform Apply
         #run: terraform apply -var-file=./dev/terraform.tfvars -auto-approve -input=false
-        run: terraform apply -target=aws_eks_cluster" "my_cluster -auto-approve -input=false
+        run: terraform apply -target=aws_eks_cluster.my_cluster -auto-approve -input=false
