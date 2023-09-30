@@ -110,7 +110,7 @@ resource "aws_eks_cluster" "my_cluster" {
   role_arn = "arn:aws:iam::712699700534:role/github-actions-role"
   vpc_config {
 
-    endpoint_point_public_access= true
+    endpoint_public_access= true
     subnet_ids = [
       aws_subnet.public_subnet_1.id,
       aws_subnet.public_subnet_2.id,
