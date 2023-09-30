@@ -33,7 +33,7 @@ resource "aws_iam_role_policy_attachment" "amazon_eks_worker_node_policy_general
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy"
 
   # The role the policy should be applied to
-  role = aws_iam_role.nodes_general.name
+  role = aws_iam_role.my-node-group.name
 }
 
 resource "aws_iam_role_policy_attachment" "amazon_eks_cni_policy_general" {
