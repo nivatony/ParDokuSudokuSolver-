@@ -27,7 +27,6 @@ variable "min_size" {
 #variable "kubeconfig" {
 #}
 
-
 #variable "kubeconfig_content" {
  # description = "Content for the kubeconfig file"
  # type        = string
