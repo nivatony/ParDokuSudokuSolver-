@@ -1,6 +1,6 @@
 name: Deploy EKS Cluster
 
-on:  
+on:   
   push:
     branches:
       - main  # Adjust to the branch you want to trigger the deployment from
