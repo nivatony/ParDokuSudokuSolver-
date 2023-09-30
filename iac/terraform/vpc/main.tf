@@ -30,7 +30,7 @@ resource "aws_subnet" "public_subnet_1" {
     "Environment"                               = var.environment
   }
 }
-
+ 
 resource "aws_subnet" "public_subnet_2" {
   vpc_id                  = aws_vpc.main.id
   cidr_block              = var.public_subnet_2_details.cidr_block
