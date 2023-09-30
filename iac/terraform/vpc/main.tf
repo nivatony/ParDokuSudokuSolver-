@@ -126,7 +126,6 @@ resource "aws_eks_cluster" "my_cluster" {
 
 }
 
-
 # Data block to fetch information about the EKS cluster
 data "aws_eks_cluster" "my_cluster" {
   name = "awesome_cluster"
