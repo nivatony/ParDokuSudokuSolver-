@@ -11,4 +11,4 @@ terraform {
             
  # config_path    = "ParDokuSudokuSolver-/.kube/config" # Set to the correct path of your kubeconfig file
 
-#}
+#} 
