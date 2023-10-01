@@ -62,7 +62,7 @@ resource "aws_launch_template" "my_launch_template" {
      type = "eia1.medium"
   }
 
-   vpc_security_group_ids = ["sg-12345678"]
+   vpc_security_group_ids = ["sgr-010d520a816dabc31"]
 
    tag_specifications {
      resource_type = "instance"
