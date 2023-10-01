@@ -54,7 +54,7 @@ jobs:
     
         run: |
          cd ${GITHUB_WORKSPACE}/iac/terraform/Eks
-         terraform init
+         terraform init -reconfigure
 
     
       # Add the Terraform plan, Terraform Plan Status, and Terraform Apply steps here
