@@ -60,7 +60,7 @@ resource "aws_iam_role_policy_attachment" "amazon_ec2_container_registry_read_on
 resource "aws_eks_node_group" "my-node-group" {
   # Name of the EKS Cluster.
    cluster_name = var.cluster_name
-
+ 
   # Name of the EKS Node Group. 
     # Resource: aws_iam_role
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role
