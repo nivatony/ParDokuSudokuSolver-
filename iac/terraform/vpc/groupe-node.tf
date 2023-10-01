@@ -18,5 +18,5 @@ resource "aws_eks_node_group" "my-node-group" {
   capacity_type  = "ON_DEMAND"
   disk_size      = 20
   instance_types = ["t3.small"]
-  
+   
 }
