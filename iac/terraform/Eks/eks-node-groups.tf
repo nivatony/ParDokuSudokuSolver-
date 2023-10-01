@@ -53,7 +53,7 @@ resource "aws_iam_role_policy_attachment" "amazon_ec2_container_registry_read_on
 
   # The role the policy should be applied to
   role = aws_iam_role.my-node-group.name
-}
+} 
 
 # Resource: aws_eks_node_group
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/eks_node_group
