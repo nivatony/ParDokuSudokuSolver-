@@ -71,8 +71,8 @@ resource "aws_eks_node_group" "my-node-group" {
   # These subnets must have the following resource tag: kubernetes.io/cluster/CLUSTER_NAME 
   # (where CLUSTER_NAME is replaced with the name of the EKS Cluster).
   subnet_ids = [
-    aws_private_subnet._1.id,
-    aws_private_subnet._2.id
+    ws_subnet.public_subnet_1.id,
+    aws_subnet.public_subnet_2.id
   ]
 
   # Configuration block with scaling settings
@@ -109,7 +109,7 @@ resource "aws_eks_node_group" "my-node-group" {
   }
 
   # Kubernetes version
-  #version = "1.18"
+  #version = "1.27"
 
   # Ensure that IAM Role permissions are created before and deleted after EKS Node Group handling.
   # Otherwise, EKS will not be able to properly delete EC2 Instances and Elastic Network Interfaces.
