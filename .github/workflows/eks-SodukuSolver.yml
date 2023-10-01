@@ -40,8 +40,8 @@ jobs:
           AWS_REGION: us-north-1
 
 
-      #- name: Update kube config
-        #run: aws eks update-kubeconfig --name awesome_cluster
+      - name: Update kube config
+        run: aws eks update-kubeconfig --name awesome_cluster
 
 
       - name: Set up Terraform (vpc)
@@ -51,8 +51,11 @@ jobs:
       
 
       - name: Initialize Terraform (vpc)
-        run: terraform init
-      
+    
+        run: |
+         cd iac/terraform/Eks
+         terraform init
+
     
       # Add the Terraform plan, Terraform Plan Status, and Terraform Apply steps here
       - name: Terraform plan
