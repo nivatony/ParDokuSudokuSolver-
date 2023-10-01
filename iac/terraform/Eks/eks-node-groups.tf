@@ -20,7 +20,7 @@ resource "aws_iam_role" "my-node-group" {
     } 
   ]
 }
-POLICY
+POLICY 
 }
    
 # Resource: aws_iam_role_policy_attachment
