@@ -52,9 +52,8 @@ jobs:
 
       - name: Initialize Terraform (vpc)
     
-        run: |
-         cd ${GITHUB_WORKSPACE}/iac/terraform/Eks
-         terraform init -reconfigure
+        run: terraform init -reconfigure
+          #cd ${GITHUB_WORKSPACE}/iac/terraform/Eks
 
     
       # Add the Terraform plan, Terraform Plan Status, and Terraform Apply steps here
