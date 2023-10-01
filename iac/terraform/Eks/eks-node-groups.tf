@@ -2,7 +2,7 @@
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role
 
 # Create IAM role for EKS Node Group
-resource "aws_iam_role" "my-node-group" {
+resource "aws_iam_role" "my-node-group" { 
   # The name of the role
   name = "eks-node-group-general-role"
   
