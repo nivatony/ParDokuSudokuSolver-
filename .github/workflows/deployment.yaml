@@ -1,9 +1,9 @@
 name: Deploy to EKS and ECR
 
-on: workflow_dispatch
-  #push:
-   # branches:
-     # - main  # Change to your main branch name
+on: 
+  push:
+    branches:
+      - main  # Change to your main branch name
 env:
   # TF_LOG: INFO
   AWS_ACCOUNT_NUMBER: 712699700534
@@ -45,8 +45,8 @@ jobs:
       - name: Deploy to EKS
         run: |
           #kubectl apply -f sudoku-solver-deployment.yaml 
-          #kubectl apply -f sudoku-solver-service.yaml 
+          kubectl apply -f sudoku-solver-service.yaml 
           #kubectl apply -f sudoku-solver-ingress.yaml 
-          kubectl apply -f sudoku-solver-pod.yaml
+          #kubectl apply -f sudoku-solver-pod.yaml
 
          
