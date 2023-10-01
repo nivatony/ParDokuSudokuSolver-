@@ -5,7 +5,7 @@
 resource "aws_iam_role" "my-node-group" {
   # The name of the role
   name = "eks-node-group-general-role"
- 
+  
   # The policy that grants an entity permission to assume the role.
   assume_role_policy = <<POLICY
 {
