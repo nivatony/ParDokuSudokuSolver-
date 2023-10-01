@@ -19,5 +19,5 @@ resource "aws_eks_node_group" "my-node-group" {
   disk_size      = 20
   instance_types = ["t3.small"]
    
-}  
+}     
    
