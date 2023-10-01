@@ -53,17 +53,16 @@ jobs:
       - name: Initialize Terraform (vpc)
     
         run: |
-         cd iac/terraform/Eks 
+         cd ${GITHUB_WORKSPACE}/iac/terraform/Eks
          terraform init
 
     
       # Add the Terraform plan, Terraform Plan Status, and Terraform Apply steps here
       - name: Terraform plan
         id: plan
-        run: terraform  destroy -target=aws_eks_node_group.my-node-group -var-file=./dev/terraform.tfvars -auto-approve -input=false   -no-color -input=false
+        #run: terraform  destroy -target=aws_eks_node_group.my-node-group -var-file=./dev/terraform.tfvars -auto-approve -input=false   -no-color -input=false
 
-        #run: terraform plan -target=aws_eks_node_group.my-node-group -var-file=./dev/terraform.tfvars -no-color -input=false
-        #continue-on-error: true
+        run: terraform plan -target=aws_eks_node_group.my-node-group -var-file=./dev/terraform.tfvars -no-color -input=false continue-on-error: true
 
       - name: Terraform Plan Status
         if: steps.plan.outcome == 'failure'
