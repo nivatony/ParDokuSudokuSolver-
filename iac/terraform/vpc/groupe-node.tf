@@ -20,4 +20,4 @@ resource "aws_eks_node_group" "my-node-group" {
   instance_types = ["t3.small"]
    
 }     
-   
+    
