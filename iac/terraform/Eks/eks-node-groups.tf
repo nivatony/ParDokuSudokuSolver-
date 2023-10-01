@@ -17,7 +17,7 @@ resource "aws_iam_role" "my-node-group" {
         "Service": "ec2.amazonaws.com"
       }, 
       "Action": "sts:AssumeRole"
-    }
+    } 
   ]
 }
 POLICY
