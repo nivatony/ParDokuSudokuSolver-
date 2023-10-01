@@ -1,4 +1,4 @@
-# terraform/eks/roles.tf
+# iac/terraform/Eks/roledending/roles.tf
 
 resource "kubernetes_cluster_role_binding" "eks_admin_binding" {
   metadata {
