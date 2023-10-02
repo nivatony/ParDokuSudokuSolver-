@@ -7,6 +7,16 @@ variable "environment" {
 }
 
 
+variable "public_route_table_id" {
+  description = "ID of the public route table"
+  type        = string
+}
+
+variable "private_route_table_id" {
+  description = "ID of the private route table"
+  type        = string
+}
+
 
 variable "desired_size" {
   type    = number
