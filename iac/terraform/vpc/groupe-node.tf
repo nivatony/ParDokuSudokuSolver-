@@ -22,6 +22,3 @@ resource "aws_eks_node_group" "my-node-group" {
    
 }     
     
-data "aws_availability_zones" "available" {
-  state = "available"
-}
