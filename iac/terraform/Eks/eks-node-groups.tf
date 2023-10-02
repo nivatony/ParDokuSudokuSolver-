@@ -158,3 +158,40 @@ resource "aws_eks_node_group" "my-node-group" {
     aws_iam_role_policy_attachment.amazon_ec2_container_registry_read_only,
   ]
 }
+resource "aws_iam_policy" "additional_ecr_access" {
+  name        = "ecr-read-access"
+  description = "Allow ECR access"
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      { 
+        "Effect" : "Allow",
+        "Resource" : "*",
+        "Action" : [
+          "ecr:GetRegistryPolicy",
+          "ecr:DescribeImageScanFindings",
+          "ecr:GetLifecyclePolicyPreview",
+          "ecr:GetDownloadUrlForLayer",
+          "ecr:DescribeRegistry",
+          "ecr:DescribePullThroughCacheRules",
+          "ecr:DescribeImageReplicationStatus",
+          "ecr:GetAuthorizationToken",
+          "ecr:ListTagsForResource",
+          "ecr:ListImages",
+          "ecr:BatchGetRepositoryScanningConfiguration",
+          "ecr:GetRegistryScanningConfiguration",
+          "ecr:GetAuthorizationToken*",
+          "ecr:UntagResource",
+          "ecr:BatchGetImage",
+          "ecr:DescribeImages",
+          "ecr:TagResource",
+          "ecr:DescribeRepositories",
+          "ecr:BatchCheckLayerAvailability",
+          "ecr:GetRepositoryPolicy",
+          "ecr:GetLifecyclePolicy"
+        ]
+      }
+    ]
+  })
+}
