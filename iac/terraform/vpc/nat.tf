@@ -27,3 +27,12 @@ resource "aws_nat_gateway" "gw2" {
     Name = "NAT 2"
   }
 }
+resource "aws_eip" "nat1" {
+  vpc = true
+  # Other configurations...
+}
+
+resource "aws_eip" "nat2" {
+  vpc = true
+  # Other configurations...
+}
