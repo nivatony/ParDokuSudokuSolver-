@@ -1,7 +1,7 @@
 cluster_name = "awesome_cluster"
 
 desired_size = 2
-max_size     = 2
+max_size     = 2 
 min_size     = 2
 
 
@@ -47,14 +47,11 @@ key_pair = "MyKeyPair"
 instance_types = "t3.small"
 
 
-eks_worker_node_policy_arn            = "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy"
-eks_cni_policy_arn                    = "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"
-ec2_container_registry_policy_arn     = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
 iam_role_name                         = "nodes_general"  # Update this with your desired IAM role name
-node= "my-node-group"
+node_group_name = "my-node-group"
 eks_node_group_role_name = "node_group_role_niva"
 eks_worker_node_policy_arn = "worker_node_policy_arn_niva"
 eks_cni_policy_arn = "cni_policy_arn_niva"
 ec2container_policy_arn = "c2container_policy_arn_niva"
-eks_vpc_resource_controller_policy_arn = "vpc_resource_controller_policy_arn_niva"
+#eks_vpc_resource_controller_policy_arn = "vpc_resource_controller_policy_arn_niva"
 
