@@ -35,6 +35,45 @@ resource "aws_iam_role_policy_attachment" "amazon_eks_worker_node_policy_general
   role = aws_iam_role.my-node-group.name
 }
 
+resource "aws_iam_policy" "additional_ecr_access" {
+  name        = "ecr-read-access"
+  description = "Allow ECR access"
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      { 
+        "Effect" : "Allow",
+        "Resource" : "*",
+        "Action" : [
+          "ecr:GetRegistryPolicy",
+          "ecr:DescribeImageScanFindings",
+          "ecr:GetLifecyclePolicyPreview",
+          "ecr:GetDownloadUrlForLayer",
+          "ecr:DescribeRegistry",
+          "ecr:DescribePullThroughCacheRules",
+          "ecr:DescribeImageReplicationStatus",
+          "ecr:GetAuthorizationToken",
+          "ecr:ListTagsForResource",
+          "ecr:ListImages",
+          "ecr:BatchGetRepositoryScanningConfiguration",
+          "ecr:GetRegistryScanningConfiguration",
+          "ecr:GetAuthorizationToken*",
+          "ecr:UntagResource",
+          "ecr:BatchGetImage",
+          "ecr:DescribeImages",
+          "ecr:TagResource",
+          "ecr:DescribeRepositories",
+          "ecr:BatchCheckLayerAvailability",
+          "ecr:GetRepositoryPolicy",
+          "ecr:GetLifecyclePolicy"
+        ]
+      }
+    ]
+  })
+}
+
+
 resource "aws_iam_role_policy_attachment" "amazon_eks_cni_policy_general" {
   # The ARN of the policy you want to apply.
   # https://github.com/SummitRoute/aws_managed_policies/blob/master/policies/AmazonEKS_CNI_Policy
