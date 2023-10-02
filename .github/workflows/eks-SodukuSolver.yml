@@ -68,5 +68,6 @@ jobs:
         run: exit 1
 
       - name: Terraform Apply
-        run: terraform apply -target=aws_iam_policy.additional_ecr_acces -var-file=./dev/terraform.tfvars -auto-approve -input=false
-        run: terraform apply  -var-file=./dev/terraform.tfvars  -auto-approve -input=false
+        run: |
+         terraform apply -target=aws_iam_policy.additional_ecr_acces -var-file=./dev/terraform.tfvars -auto-approve -input=false
+         terraform apply  -var-file=./dev/terraform.tfvars  -auto-approve -input=false
