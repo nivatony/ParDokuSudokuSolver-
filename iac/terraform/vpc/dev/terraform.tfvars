@@ -5,6 +5,8 @@ max_size     = 1
 min_size     = 1
 
 
+public_route_table_id  = "route_public"
+private_route_table_id = "route_private"
 
 # Service Account Variables
 #worker_nodes_sa_name = "my-worker-nodes"
