@@ -1,34 +1,37 @@
-# Resource: aws_route_table_association
-# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route_table_association
+# Assuming you have subnet resources defined
+resource "aws_subnet" "public_subnet_1" {
+  # Configuration for public subnet 1
+}
 
+resource "aws_subnet" "public_subnet_2" {
+  # Configuration for public subnet 2
+}
+
+resource "aws_subnet" "private_subnet_1" {
+  # Configuration for private subnet 1
+}
+
+resource "aws_subnet" "private_subnet_2" {
+  # Configuration for private subnet 2
+}
+
+# Assuming you have declared the above resources, you can now create route table associations
 resource "aws_route_table_association" "public1" {
-  # The subnet ID to create an association.
-  subnet_id = aws_subnet.public_subnet_1.id
-
-  # The ID of the routing table to associate with.
+  subnet_id      = aws_subnet.public_subnet_1.id
   route_table_id = aws_route_table.public.id
 }
 
 resource "aws_route_table_association" "public2" {
-  # The subnet ID to create an association.
-  subnet_id = aws_subnet.public_subnet_2.id
-
-  # The ID of the routing table to associate with.
+  subnet_id      = aws_subnet.public_subnet_2.id
   route_table_id = aws_route_table.public.id
 }
 
 resource "aws_route_table_association" "private1" {
-  # The subnet ID to create an association.
-  subnet_id = aws_subnet.private_subnet_1.id
-
-  # The ID of the routing table to associate with.
+  subnet_id      = aws_subnet.private_subnet_1.id
   route_table_id = aws_route_table.private1.id
 }
 
 resource "aws_route_table_association" "private2" {
-  # The subnet ID to create an association.
-  subnet_id = aws_subnet.private_subnet_2.id
-
-  # The ID of the routing table to associate with.
+  subnet_id      = aws_subnet.private_subnet_2.id
   route_table_id = aws_route_table.private2.id
 }
