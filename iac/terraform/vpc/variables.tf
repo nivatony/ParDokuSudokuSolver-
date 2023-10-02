@@ -32,36 +32,24 @@ variable "min_size" {
  # type        = string
 #} 
 
-
-variable "worker_nodes_read_pods_binding_name" {
-  description = "Name of the Kubernetes ClusterRoleBinding binding ClusterRole to ServiceAccount"
+variable "eks_worker_node_policy_arn" {
+  description = "ARN of the Amazon EKS Worker Node Policy"
   type        = string
-  default     = "worker-nodes-read-pods"
 }
 
-variable "read_only_pods_role_name" {
-  description = "Name of the Kubernetes ClusterRole granting read-only access to Pods"
+variable "eks_cni_policy_arn" {
+  description = "ARN of the Amazon EKS CNI Policy"
   type        = string
-  default     = "read-only-pods"
 }
 
-variable "node"{
-type = string
-
-
+variable "ec2_container_registry_policy_arn" {
+  description = "ARN of the Amazon EC2 Container Registry ReadOnly Policy"
+  type        = string
 }
 
-
-variable "worker_nodes_sa_name" {
-  description = "Name of the Kubernetes ServiceAccount for worker nodes"
+variable "iam_role_name" {
+  description = "Name of the IAM Role"
   type        = string
-  default     = "worker-nodes"
-}
-
-variable "worker_nodes_sa_namespace" {
-  description = "Namespace for the Kubernetes ServiceAccount for worker nodes"
-  type        = string
-  default     = "kube-system"
 }
 
 
