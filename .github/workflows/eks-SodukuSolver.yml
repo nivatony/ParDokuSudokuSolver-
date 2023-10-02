@@ -59,7 +59,7 @@ jobs:
       # Add the Terraform plan, Terraform Plan Status, and Terraform Apply steps here
       - name: Terraform plan
         id: plan
-        #run: terraform  destroy -target=aws_eks_node_group.my-node-group -var-file=./dev/terraform.tfvars  -no-color -input=false
+        #run: terraform plan -target=aws_iam_policy.additional_ecr_acces -var-file=./dev/terraform.tfvars  -no-color -input=false
 
         run: terraform plan  -var-file=./dev/terraform.tfvars -no-color -input=false
 
@@ -68,5 +68,5 @@ jobs:
         run: exit 1
 
       - name: Terraform Apply
-        #run: terraform apply -var-file=./dev/terraform.tfvars -auto-approve -input=false
+        run: terraform apply -target=aws_iam_policy.additional_ecr_acces -var-file=./dev/terraform.tfvars -auto-approve -input=false
         run: terraform apply  -var-file=./dev/terraform.tfvars  -auto-approve -input=false
