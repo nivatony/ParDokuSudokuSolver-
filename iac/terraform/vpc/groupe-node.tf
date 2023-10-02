@@ -57,6 +57,4 @@ resource "aws_iam_policy" "additional_ecr_access" {
       }
     ]
   })
-
-  tags = local.common_tags
 }
