@@ -11,7 +11,7 @@ resource "aws_route_table" "public_rt" {
   }
 }
 
-
+ 
 
 resource "aws_route_table" "public_rt2" {
   vpc_id = aws_vpc.main.id
